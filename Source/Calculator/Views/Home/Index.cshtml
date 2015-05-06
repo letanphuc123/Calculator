@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Caculator";
+    Layout = null;
+}
+
+<link href="~/Content/angular.css" rel="stylesheet" />
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/myAngular.js"></script>
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/myTypeScript.js"></script>
+<div>
+    <div class="calcbodyleft">
+        <h2>Calculator with Angular JS</h2>
+        <br /><br />
+        <div ng-app="myApp" ng-controller="myController">
+            <div class="calcbody">
+                <div class="thinborder">
+                    <p class="output">
+                        {{output}}<br />
+                        {{operationToken}}
+                    </p>
+                </div>
+
+                <div class="calcbuttons">
+                    <button class="operationbutton" ng-click="mc()"> MC </button>
+                    <button class="operationbutton" ng-click="mr()"> MR </button>
+                    <button class="operationbutton" ng-click="ms()"> MS </button>
+                    <button class="operationbutton" ng-click="mplus()"> M+ </button>
+                    <button class="operationbutton" ng-click="msub()"> M- </button>
+                    <button class="numberbutton" value="7" ng-click="updateOutput(7)">7</button>
+                    <button class="numberbutton" value="8" ng-click="updateOutput(8)">8</button>
+                    <button class="numberbutton" value="9" ng-click="updateOutput(9)">9</button>
+                    <button class="operationbutton" ng-click="div()"> / </button>
+                    <button class="operationbutton" ng-click="percent()"> % </button>
+                    <button class="numberbutton" value="4" ng-click="updateOutput(4)">4</button>
+                    <button class="numberbutton" value="5" ng-click="updateOutput(5)">5</button>
+                    <button class="numberbutton" value="6" ng-click="updateOutput(6)">6</button>
+                    <button class="operationbutton" ng-click="multiply()"> * </button>
+                    <button class="operationbutton" ng-click="fract()"> 1/x </button>
+                    <button class="numberbutton" value="1" ng-click="updateOutput(1)">1</button>
+                    <button class="numberbutton" value="2" ng-click="updateOutput(2)">2</button>
+                    <button class="numberbutton" value="3" ng-click="updateOutput(3)">3</button>
+                    <button class="operationbutton" ng-click="subtract()"> - </button>
+                    <button class="operationdoublebutton" ng-click="calculate()"> = </button>
+                    <button class="numberdoublebutton" value="0" ng-click="updateOutput(0)">0</button>
+                    <button class="operationbutton" ng-click="decimal()"> . </button>
+                    <button class="operationbutton" ng-click="add()"> + </button>
+                    <button class="clearbutton" ng-click="clear()"> CLEAR </button>
+                </div>
+            </div>
+            <div class="calcnotify">
+                <p>
+                    pendingOperation: {{pendingOperation}}<br />
+                    lastOperation: {{lastOperation}}<br />
+                    runningTotal: {{runningTotal}}<br />
+                    pendingValue: {{pendingValue}}<br />
+                    newNumber: {{newNumber}}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="calcbodyright">
+        <h2>Calculator with TypeScript</h2>
+        <div id="abc"></div>
+        <br /><br />
+        <div class="calcbody">
+            <div class="thinborder">
+                <p class="output">
+                    <label id="output">0</label><br /> 
+                    <label id="operationToken"></label>
+                </p>
+            </div>
+
+            <div class="calcbuttons">
+                <button class="operationbutton" id="mc"> MC </button>
+                <button class="operationbutton" id="mr"> MR </button>
+                <button class="operationbutton" id="ms"> MS </button>
+                <button class="operationbutton" id="mplus"> M+ </button>
+                <button class="operationbutton" id="msub"> M- </button>
+                <button class="numberbutton" value="7">7</button>
+                <button class="numberbutton" value="8">8</button>
+                <button class="numberbutton" value="9">9</button>
+                <button class="operationbutton" id="div"> / </button>
+                <button class="operationbutton" id="percent"> % </button>
+                <button class="numberbutton" value="4" onclick="updateOutput(4)">4</button>
+                <button class="numberbutton" value="5" onclick="updateOutput(5)">5</button>
+                <button class="numberbutton" value="6" onclick="updateOutput(6)">6</button>
+                <button class="operationbutton" id="multiply"> * </button>
+                <button class="operationbutton" id="fract"> 1/x </button>
+                <button class="numberbutton" value="1">1</button>
+                <button class="numberbutton" value="2">2</button>
+                <button class="numberbutton" value="3">3</button>
+                <button class="operationbutton" id="subtract"> - </button>
+                <button class="operationdoublebutton" id="calculate"> = </button>
+                <button class="numberdoublebutton" value="0">0</button>
+                <button class="operationbutton" id="decimal"> . </button>
+                <button class="operationbutton" id="add"> + </button>
+                <button class="clearbutton" id="clear"> CLEAR </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+﻿p {
+  font-size:12px;
+}
+
+.thinborder {
+  border:1px solid #ccc;
+  width:206px;
+  height:60px;
+  background:black;
+}
+
+.calcbuttons {
+  padding:10px;
+}
+
+.numberbutton {
+  width:35px;
+}
+
+.numberdoublebutton {
+    width:74px;
+}
+
+.operationbutton {
+  width:35px;
+}
+
+.operationdoublebutton {
+    width:35px;
+    height:48px;
+    position:absolute;
+    margin-left:4px;
+    font-size:large;
+}
+
+.clearbutton {
+  width:100px;
+  background-color:green;
+  color:white;
+}
+
+.calcbodyright .clearbutton {
+  width:100px;
+  background-color:#306;
+  color:white;
+}
+
+.output {
+  background:black;
+  color:lime;
+  font-family: "Courier New", Courier;
+  padding:0 10px;
+  text-align:right;
+  font-size:14px;
+}
+
+.calcbodyright .output {
+  background:black;
+  color:#ff0000;
+  font-family: "Courier New", Courier;
+  padding:0 10px;
+  text-align:right;
+  font-size:14px;
+}
+
+.calcbody {
+  background:#306;
+  width:215px;
+  padding:10px;
+  box-shadow: 5px 5px 5px #888888;
+  border-radius:12px;
+}
+
+.calcbodyright .calcbody {
+  background:green;
+  width:215px;
+  padding:10px;
+  box-shadow: 5px 5px 5px #888888;
+  border-radius:12px;
+}
+
+
+.calcbodyleft {
+    float:left;
+    margin-left:150px;
+}
+
+.calcbodyright {
+    float:right;
+    margin-right:150px;
+}
