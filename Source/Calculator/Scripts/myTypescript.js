@@ -2,10 +2,12 @@ var output = "0";
 var newNumber = true;
 var pendingOperation = null;
 var operationToken = "";
+var operationTokenOld = "";
 var runningTotal = null;
 var pendingValue = null;
 var lastValue = null;
 var lastOperation = null;
+var enableText = true;
 var ADD = "adding";
 var SUBSTRACT = "subtracting";
 var MULTIPLY = "multiply";
@@ -17,6 +19,29 @@ var DIV_TOKEN = "/";
 var FLAG = null;
 var CURRENT_VALUE = 0;
 var SET_CURRENT_VALUE = false;
+function mrcal() {
+    output = "0";
+    return output;
+}
+;
+function mscal() {
+    enableText = (output == "0" ? false : true);
+    return output == "0" ? "" : "M";
+}
+;
+function mccal() {
+    return (enableText ? "" : "");
+}
+;
+function mpluscal() {
+    enableText = (output == "0" ? false : true);
+    return output == "0" ? "" : "M";
+}
+;
+function msubcal() {
+    return (enableText ? "" : "");
+}
+;
 function updateOutput(btn) {
     if (output == "0" || newNumber) {
         output = btn;
@@ -25,49 +50,61 @@ function updateOutput(btn) {
     else {
         output += String(btn);
     }
-    pendingValue = toNumber(btn);
+    pendingValue = toNumber(output);
     FLAG = "NUMBER";
     return output;
 }
 ;
-function add() {
+function add(information) {
     checkOperator();
-    setOperationToken(ADD);
+    if (FLAG != "ADD") {
+        information.operationTokenInfo = setOperationToken(ADD);
+    }
+    information.outputInfo = runningTotal;
     setOutput(String(runningTotal));
     pendingOperation = ADD;
     pendingValue = null;
     FLAG = "ADD";
-    return operationToken;
+    return information;
 }
 ;
-function subtract() {
+function subtract(information) {
     checkOperator();
-    setOperationToken(SUBSTRACT);
+    if (FLAG != "SUBSTRACT") {
+        information.operationTokenInfo = setOperationToken(SUBSTRACT);
+    }
+    information.outputInfo = runningTotal;
     setOutput(String(runningTotal));
     pendingOperation = SUBSTRACT;
     pendingValue = null;
     FLAG = "SUBSTRACT";
-    return operationToken;
+    return information;
 }
 ;
-function multiply() {
+function multiply(information) {
     checkOperator();
-    setOperationToken(MULTIPLY);
+    if (FLAG != "MULTIPLY") {
+        information.operationTokenInfo = setOperationToken(MULTIPLY);
+    }
+    information.outputInfo = runningTotal;
     setOutput(String(runningTotal));
     pendingOperation = MULTIPLY;
     pendingValue = null;
     FLAG = "MULTIPLY";
-    return operationToken;
+    return information;
 }
 ;
-function div() {
+function div(information) {
     checkOperator();
-    setOperationToken(DIV);
+    if (FLAG != "DIV") {
+        information.operationTokenInfo = setOperationToken(DIV);
+    }
+    information.outputInfo = runningTotal;
     setOutput(String(runningTotal));
     pendingOperation = DIV;
     pendingValue = null;
     FLAG = "DIV";
-    return operationToken;
+    return information;
 }
 ;
 function calculate() {
@@ -162,7 +199,7 @@ function calculate() {
         CURRENT_VALUE = pendingValue;
     pendingOperation = null;
     pendingValue = null;
-    FLAG = null;
+    FLAG = "NUMBER";
     SET_CURRENT_VALUE = true;
     return runningTotal;
 }
@@ -171,13 +208,13 @@ function clear() {
     pendingValue = null;
     runningTotal = null;
     pendingOperation = null;
-    newNumber = true;
     lastOperation = null;
     FLAG = null;
     SET_CURRENT_VALUE = false;
     CURRENT_VALUE = 0;
     setOutput("0");
     setOperationToken(null);
+    return "";
 }
 ;
 function toNumber(numberString) {
@@ -189,21 +226,31 @@ function toNumber(numberString) {
 }
 ;
 function setOperationToken(operation) {
-    if (operation == ADD) {
-        operationToken = ADD_TOKEN;
+    if (FLAG == "NUMBER") {
+        operationTokenOld = operationToken + output + " ";
+        if (operation == ADD) {
+            operationToken += output + " " + ADD_TOKEN + "  ";
+        }
+        else if (operation == SUBSTRACT) {
+            operationToken += output + " " + SUBTRACT_TOKEN + "  ";
+        }
+        else if (operation == MULTIPLY) {
+            operationToken += output + " " + MULTIPLY_TOKEN + "  ";
+        }
+        else if (operation == DIV) {
+            operationToken += output + " " + DIV_TOKEN + "  ";
+        }
+        else {
+            operationToken = "";
+        }
     }
-    else if (operation == SUBSTRACT) {
-        operationToken = SUBTRACT_TOKEN;
-    }
-    else if (operation == MULTIPLY) {
-        operationToken = MULTIPLY_TOKEN;
-    }
-    else if (operation == DIV) {
-        operationToken = DIV_TOKEN;
-    }
-    else {
+    else if (FLAG == null) {
         operationToken = "";
     }
+    else {
+        operationToken = operationTokenOld + (operation == SUBSTRACT ? SUBTRACT_TOKEN : (operation == MULTIPLY ? MULTIPLY_TOKEN : (operation == ADD ? ADD_TOKEN : DIV_TOKEN))) + "  ";
+    }
+    return operationToken;
 }
 ;
 function setOutput(outputString) {
@@ -212,7 +259,7 @@ function setOutput(outputString) {
 }
 ;
 function checkOperator() {
-    if (pendingValue) {
+    if (pendingValue != null) {
         if (runningTotal && pendingOperation == SUBSTRACT) {
             runningTotal -= pendingValue;
         }
@@ -232,6 +279,7 @@ function checkOperator() {
 }
 ;
 window.onload = function () {
+    var outputInformation = { outputInfo: "", operationTokenInfo: "" };
     $(".numberbutton").click(function () {
         $("#output").text(updateOutput($(this).val()));
     });
@@ -239,24 +287,43 @@ window.onload = function () {
         $("#output").text(updateOutput($(this).val()));
     });
     $("#add").click(function () {
-        $("#operationToken").text(add());
+        $("#operationToken").text(add(outputInformation).operationTokenInfo);
+        $("#output").text(add(outputInformation).outputInfo);
     });
     $("#subtract").click(function () {
-        $("#operationToken").text(subtract());
+        $("#operationToken").text(subtract(outputInformation).operationTokenInfo);
+        $("#output").text(subtract(outputInformation).outputInfo);
     });
     $("#multiply").click(function () {
-        $("#operationToken").text(multiply());
+        $("#operationToken").text(multiply(outputInformation).operationTokenInfo);
+        $("#output").text(multiply(outputInformation).outputInfo);
     });
     $("#div").click(function () {
-        $("#operationToken").text(div());
+        $("#operationToken").text(div(outputInformation).operationTokenInfo);
+        $("#output").text(div(outputInformation).outputInfo);
     });
     $("#clear").click(function () {
         $("#output").text("0");
-        $("#operationToken").text("");
+        $("#operationToken").text(clear());
     });
     $("#calculate").click(function () {
         $("#output").text(calculate());
         $("#operationToken").text("");
+    });
+    $("#mr").click(function () {
+        $("#output").text(mrcal());
+    });
+    $("#ms").click(function () {
+        $("#changeOutput").text(mscal());
+    });
+    $("#mc").click(function () {
+        $("#changeOutput").text(mccal());
+    });
+    $("#mplus").click(function () {
+        $("#changeOutput").text(mpluscal());
+    });
+    $("#msub").click(function () {
+        $("#changeOutput").text(msubcal());
     });
 };
 //# sourceMappingURL=myTypescript.js.map

@@ -9,7 +9,7 @@
 <script src="~/Scripts/jquery-1.7.1.min.js"></script>
 <script src="~/Scripts/myTypeScript.js"></script>
 <div>
-    <div class="calcbodyleft">
+    @*<div class="calcbodyleft">
         <h2>Calculator with Angular JS</h2>
         <br /><br />
         <div ng-app="myApp" ng-controller="myController">
@@ -58,16 +58,17 @@
                 </p>
             </div>
         </div>
-    </div>
+    </div>*@
     <div class="calcbodyright">
         <h2>Calculator with TypeScript</h2>
         <div id="abc"></div>
         <br /><br />
         <div class="calcbody">
             <div class="thinborder">
+				<label id="changeOutput"></label>
                 <p class="output">
-                    <label id="output">0</label><br /> 
-                    <label id="operationToken"></label>
+					<label id="operationToken"></label><br />
+                    <label id="output">0</label>
                 </p>
             </div>
 
@@ -82,9 +83,9 @@
                 <button class="numberbutton" value="9">9</button>
                 <button class="operationbutton" id="div"> / </button>
                 <button class="operationbutton" id="percent"> % </button>
-                <button class="numberbutton" value="4" onclick="updateOutput(4)">4</button>
-                <button class="numberbutton" value="5" onclick="updateOutput(5)">5</button>
-                <button class="numberbutton" value="6" onclick="updateOutput(6)">6</button>
+                <button class="numberbutton" value="4">4</button>
+                <button class="numberbutton" value="5">5</button>
+                <button class="numberbutton" value="6">6</button>
                 <button class="operationbutton" id="multiply"> * </button>
                 <button class="operationbutton" id="fract"> 1/x </button>
                 <button class="numberbutton" value="1">1</button>

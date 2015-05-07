@@ -54,13 +54,32 @@
   font-size:14px;
 }
 
+.calcbodyright #changeOutput {
+  background:black;
+  color:#888888;
+  font-family: "Courier New", Courier;
+  padding:0 10px;
+  text-align:left;
+  float:left;
+  font-size:18px;
+}
+
 .calcbodyright .output {
   background:black;
   color:#ff0000;
   font-family: "Courier New", Courier;
   padding:0 10px;
   text-align:right;
-  font-size:14px;
+  font-size:18px;
+}
+
+.calcbodyright .output #operationToken{
+  background:black;
+  color:#ff0000;
+  font-family: "Courier New", Courier;
+  padding:0 10px;
+  text-align:right;
+  font-size:13px;
 }
 
 .calcbody {

@@ -29,7 +29,7 @@ myApp.controller('myController', ['$scope', function ($scope) {
         } else {
             $scope.output += String(btn);
         }
-        $scope.pendingValue = toNumberAngular(btn);
+        $scope.pendingValue = toNumberAngular($scope.output);
         FLAG = "NUMBER";
     };
 
