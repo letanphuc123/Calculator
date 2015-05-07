@@ -49,6 +49,15 @@ function msubcal() {
 	return (enableText ? "" : "");
 };
 
+function percent(information: OutputInformation) {
+	var result = String((runningTotal * toNumber(output)) / 100);
+	information.outputInfo = result;
+	information.operationTokenInfo = operationToken + " " + result;
+	pendingValue = result;
+	output = result;
+	return information;
+};
+
 function updateOutput(btn: string) {
 	if (output == "0" || newNumber) {
 		output = btn;
@@ -317,5 +326,11 @@ window.onload = function () {
 
 	$("#msub").click(function () {
 		$("#changeOutput").text(msubcal());
+	});
+
+	$("#percent").click(function () {
+		var info = percent(outputInformation);
+		$("#operationToken").text(info.operationTokenInfo);
+		$("#output").text(info.outputInfo);
 	});
 };
