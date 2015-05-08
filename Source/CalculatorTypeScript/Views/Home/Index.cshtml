@@ -1,0 +1,51 @@
+﻿@{
+	ViewBag.Title = "Caculator";
+	Layout = null;
+}
+
+<link href="~/Content/angular.css" rel="stylesheet" />
+<script src="~/Script/jquery-1.7.1.min.js"></script>
+<script src="~/Script/myScript.js"></script>
+<div>
+	<div class="calcbodyright">
+		<h2>Calculator with TypeScript</h2>
+		<div id="abc"></div>
+		<br /><br />
+		<div class="calcbody">
+			<div class="thinborder">
+				<label id="changeOutput"></label>
+				<p class="output">
+					<label id="operationToken"></label><br />
+					<label id="output">0</label>
+				</p>
+			</div>
+
+			<div class="calcbuttons">
+				<button class="operationbutton" id="mc"> MC </button>
+				<button class="operationbutton" id="mr"> MR </button>
+				<button class="operationbutton" id="ms"> MS </button>
+				<button class="operationbutton" id="mplus"> M+ </button>
+				<button class="operationbutton" id="msub"> M- </button>
+				<button class="numberbutton" value="7">7</button>
+				<button class="numberbutton" value="8">8</button>
+				<button class="numberbutton" value="9">9</button>
+				<button class="operationbutton" id="div"> / </button>
+				<button class="operationbutton" id="percent"> % </button>
+				<button class="numberbutton" value="4">4</button>
+				<button class="numberbutton" value="5">5</button>
+				<button class="numberbutton" value="6">6</button>
+				<button class="operationbutton" id="multiply"> * </button>
+				<button class="operationbutton" id="fract"> 1/x </button>
+				<button class="numberbutton" value="1">1</button>
+				<button class="numberbutton" value="2">2</button>
+				<button class="numberbutton" value="3">3</button>
+				<button class="operationbutton" id="subtract"> - </button>
+				<button class="operationdoublebutton" id="calculate"> = </button>
+				<button class="numberdoublebutton" value="0">0</button>
+				<button class="operationbutton" id="decimal"> . </button>
+				<button class="operationbutton" id="add"> + </button>
+				<button class="clearbutton" id="clear"> CLEAR </button>
+			</div>
+		</div>
+	</div>
+</div>
