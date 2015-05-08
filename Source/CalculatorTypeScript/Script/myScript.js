@@ -288,9 +288,10 @@ var Calculator = (function () {
 window.onload = function () {
     var cal = new Calculator("0", true, null, "", "", null, null, null, null, true);
     var IOutputInformation = { outputInfo: "", operationTokenInfo: "" };
+    $("#output").val("0");
     $(".numberbutton").click(function () {
         var _this = this;
-        $("#output").text(function (string) { return cal.updateOutput($(_this).val()); });
+        $("#output").val(function (string) { return cal.updateOutput($(_this).val()); });
     });
     $(".numberdoublebutton").click(function () {
         var _this = this;
@@ -299,33 +300,33 @@ window.onload = function () {
     $("#add").click(function () {
         var info = cal.add(IOutputInformation);
         $("#operationToken").text(function (string) { return info.operationTokenInfo; });
-        $("#output").text(function (string) { return info.outputInfo; });
+        $("#output").val(function (string) { return info.outputInfo; });
     });
     $("#subtract").click(function () {
         var info = cal.subtract(IOutputInformation);
         $("#operationToken").text(function (string) { return info.operationTokenInfo; });
-        $("#output").text(function (string) { return info.outputInfo; });
+        $("#output").val(function (string) { return info.outputInfo; });
     });
     $("#multiply").click(function () {
         var info = cal.multiply(IOutputInformation);
         $("#operationToken").text(function (string) { return info.operationTokenInfo; });
-        $("#output").text(function (string) { return info.outputInfo; });
+        $("#output").val(function (string) { return info.outputInfo; });
     });
     $("#div").click(function () {
         var info = cal.div(IOutputInformation);
         $("#operationToken").text(function (string) { return info.operationTokenInfo; });
-        $("#output").text(function (string) { return info.outputInfo; });
+        $("#output").val(function (string) { return info.outputInfo; });
     });
     $("#clear").click(function () {
-        $("#output").text(function (string) { return "0"; });
+        $("#output").val(function (string) { return "0"; });
         $("#operationToken").text(function (string) { return cal.clear(); });
     });
     $("#calculate").click(function () {
-        $("#output").text(function (string) { return cal.calculate().toString(); });
+        $("#output").val(function (string) { return cal.calculate().toString(); });
         $("#operationToken").text(function (string) { return ""; });
     });
     $("#mr").click(function () {
-        $("#output").text(function (string) { return cal.mrcal(); });
+        $("#output").val(function (string) { return cal.mrcal(); });
     });
     $("#ms").click(function () {
         $("#changeOutput").text(function (string) { return cal.mscal(); });
@@ -342,7 +343,7 @@ window.onload = function () {
     $("#percent").click(function () {
         var info = cal.percent(IOutputInformation);
         $("#operationToken").text(function (string) { return info.operationTokenInfo; });
-        $("#output").text(function (string) { return info.outputInfo; });
+        $("#output").val(function (string) { return info.outputInfo; });
     });
 };
 //# sourceMappingURL=myScript.js.map

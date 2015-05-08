@@ -302,8 +302,9 @@ interface IOutputInformation {
 window.onload = function () {
 	var cal = new Calculator("0", true, null, "", "", null, null, null, null, true);
 	var IOutputInformation = { outputInfo: "", operationTokenInfo: "" };
+	$("#output").val("0");
 	$(".numberbutton").click(function () {
-		$("#output").text(string => cal.updateOutput($(this).val()));
+		$("#output").val(string => cal.updateOutput($(this).val()));
 	});
 
 	$(".numberdoublebutton").click(function () {
@@ -313,39 +314,39 @@ window.onload = function () {
 	$("#add").click(function () {
 		var info = cal.add(IOutputInformation);
 		$("#operationToken").text(string => info.operationTokenInfo);
-		$("#output").text(string => info.outputInfo);
+		$("#output").val(string => info.outputInfo);
 	});
 
 	$("#subtract").click(function () {
 		var info = cal.subtract(IOutputInformation);
 		$("#operationToken").text(string => info.operationTokenInfo);
-		$("#output").text(string => info.outputInfo);
+		$("#output").val(string => info.outputInfo);
 	});
 
 	$("#multiply").click(function () {
 		var info = cal.multiply(IOutputInformation);
 		$("#operationToken").text(string => info.operationTokenInfo);
-		$("#output").text(string => info.outputInfo);
+		$("#output").val(string => info.outputInfo);
 	});
 
 	$("#div").click(function () {
 		var info = cal.div(IOutputInformation);
 		$("#operationToken").text(string => info.operationTokenInfo);
-		$("#output").text(string => info.outputInfo);
+		$("#output").val(string => info.outputInfo);
 	});
 
 	$("#clear").click(function () {
-		$("#output").text(string => "0");
+		$("#output").val(string => "0");
 		$("#operationToken").text(string => cal.clear());
 	});
 
 	$("#calculate").click(function () {
-		$("#output").text(string => cal.calculate().toString());
+		$("#output").val(string => cal.calculate().toString());
 		$("#operationToken").text(string => "");
 	});
 
 	$("#mr").click(function () {
-		$("#output").text(string => cal.mrcal());
+		$("#output").val(string => cal.mrcal());
 	});
 
 	$("#ms").click(function () {
@@ -367,6 +368,6 @@ window.onload = function () {
 	$("#percent").click(function () {
 		var info = cal.percent(IOutputInformation);
 		$("#operationToken").text(string => info.operationTokenInfo);
-		$("#output").text(string => info.outputInfo);
+		$("#output").val(string => info.outputInfo);
 	});
 };

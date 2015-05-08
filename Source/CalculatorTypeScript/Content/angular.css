@@ -5,7 +5,7 @@
 .thinborder {
 	border:1px solid #ccc;
 	width:206px;
-	height:60px;
+	height:auto;
 	background:black;
 }
 
@@ -71,6 +71,7 @@
 	padding:0 10px;
 	text-align:right;
 	font-size:18px;
+	height:auto;
 }
 
 .calcbodyright .output #operationToken{
@@ -80,6 +81,21 @@
 	padding:0 10px;
 	text-align:right;
 	font-size:13px;
+}
+
+.calcbodyright .output #output{
+	background:black;
+	color:#ff0000;
+	font-family: "Courier New", Courier;
+	padding:0 10px;
+	text-align:right;
+	font-size:18px;
+	margin-right: 50px;
+	float:right;
+	margin-right: -10px;
+	max-width: 205px;
+	border: none;
+	margin-top: -3px;
 }
 
 .calcbody {
