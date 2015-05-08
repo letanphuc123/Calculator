@@ -44,30 +44,30 @@ class Calculator {
 	}
 
 	// function
-	mrcal() {
+	mrcal(): string {
 		this.output = "0";
 		return this.output;
 	}
 
-	mscal() {
+	mscal(): string {
 		this.enableText = (this.output === "0" ? false : true);
 		return this.output === "0" ? "" : "M";
 	}
 
-	mccal() {
+	mccal(): string {
 		return (this.enableText ? "" : "");
 	}
 
-	mpluscal() {
+	mpluscal(): string {
 		this.enableText = (this.output === "0" ? false : true);
 		return this.output === "0" ? "" : "M";
 	}
 
-	msubcal() {
+	msubcal(): string {
 		return (this.enableText ? "" : "");
 	}
 
-	toNumber(numberString: string) {
+	toNumber(numberString: string): number {
 		var result = 0;
 		if (numberString) {
 			result = parseFloat(numberString) * 1;
@@ -75,7 +75,7 @@ class Calculator {
 		return result;
 	}
 
-	percent(information: IOutputInformation) {
+	percent(information: IOutputInformation): IOutputInformation {
 		var result = String((this.runningTotal * this.toNumber(this.output)) / 100);
 		information.outputInfo = result;
 		information.operationTokenInfo = this.operationToken + " " + result;
@@ -84,7 +84,7 @@ class Calculator {
 		return information;
 	}
 
-	updateOutput(btn: string) {
+	updateOutput(btn: string): string {
 		if (this.output === "0" || this.newNumber) {
 			this.output = btn;
 			this.newNumber = false;
@@ -96,7 +96,7 @@ class Calculator {
 		return this.output;
 	}
 
-	add(information: IOutputInformation) {
+	add(information: IOutputInformation): IOutputInformation {
 		this.checkOperator();
 		if (this.FLAG !== "ADD") {
 			information.operationTokenInfo = this.setOperationToken(this.ADD);
@@ -109,7 +109,7 @@ class Calculator {
 		return information;
 	}
 
-	subtract(information: IOutputInformation) {
+	subtract(information: IOutputInformation): IOutputInformation {
 		this.checkOperator();
 		if (this.FLAG !== "SUBSTRACT") {
 			information.operationTokenInfo = this.setOperationToken(this.SUBSTRACT);
@@ -122,7 +122,7 @@ class Calculator {
 		return information;
 	}
 
-	multiply(information: IOutputInformation) {
+	multiply(information: IOutputInformation): IOutputInformation {
 		this.checkOperator();
 		if (this.FLAG !== "MULTIPLY") {
 			information.operationTokenInfo = this.setOperationToken(this.MULTIPLY);
@@ -135,7 +135,7 @@ class Calculator {
 		return information;
 	}
 
-	div(information: IOutputInformation) {
+	div(information: IOutputInformation): IOutputInformation {
 		this.checkOperator();
 		if (this.FLAG !== "DIV") {
 			information.operationTokenInfo = this.setOperationToken(this.DIV);
@@ -149,7 +149,7 @@ class Calculator {
 	}
 
 	// calculator
-	calculate() {
+	calculate(): number {
 		if (!this.newNumber) {
 			this.pendingValue = this.toNumber(this.output);
 			this.lastValue = this.pendingValue;
@@ -232,7 +232,7 @@ class Calculator {
 		return this.runningTotal;
 	}
 
-	clear() {
+	clear(): string {
 		this.pendingValue = null;
 		this.runningTotal = null;
 		this.pendingOperation = null;
@@ -245,7 +245,7 @@ class Calculator {
 		return "";
 	}
 
-	setOperationToken(operation: string) {
+	setOperationToken(operation: string): string {
 		if (this.FLAG === "NUMBER") {
 			if (operation === this.ADD) {
 				this.operationToken += this.output + " " + this.ADD_TOKEN + "  ";
@@ -268,12 +268,13 @@ class Calculator {
 		return this.operationToken;
 	}
 
-	setOutput(outputString: string) {
+	setOutput(outputString: string): string {
 		this.output = outputString;
 		this.newNumber = true;
+		return "";
 	}
 
-	checkOperator() {
+	checkOperator(): string {
 		if (this.pendingValue !== null) {
 			if (this.runningTotal && this.pendingOperation === this.SUBSTRACT) {
 				this.runningTotal -= this.pendingValue;
@@ -287,6 +288,7 @@ class Calculator {
 				this.runningTotal = this.pendingValue;
 			}
 		}
+		return "";
 	}
 };
 

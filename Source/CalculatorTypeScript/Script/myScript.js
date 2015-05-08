@@ -259,6 +259,7 @@ var Calculator = (function () {
     Calculator.prototype.setOutput = function (outputString) {
         this.output = outputString;
         this.newNumber = true;
+        return "";
     };
     Calculator.prototype.checkOperator = function () {
         if (this.pendingValue !== null) {
@@ -278,6 +279,7 @@ var Calculator = (function () {
                 this.runningTotal = this.pendingValue;
             }
         }
+        return "";
     };
     return Calculator;
 })();
