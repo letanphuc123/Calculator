@@ -308,7 +308,7 @@ window.onload = function () {
 	});
 
 	$(".numberdoublebutton").click(function () {
-		$("#output").text(string => cal.updateOutput($(this).val()));
+		$("#output").val(string => cal.updateOutput($(this).val()));
 	});
 
 	$("#add").click(function () {

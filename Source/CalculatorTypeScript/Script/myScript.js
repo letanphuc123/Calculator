@@ -295,7 +295,7 @@ window.onload = function () {
     });
     $(".numberdoublebutton").click(function () {
         var _this = this;
-        $("#output").text(function (string) { return cal.updateOutput($(_this).val()); });
+        $("#output").val(function (string) { return cal.updateOutput($(_this).val()); });
     });
     $("#add").click(function () {
         var info = cal.add(IOutputInformation);
