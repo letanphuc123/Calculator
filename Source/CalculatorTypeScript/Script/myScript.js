@@ -1,7 +1,7 @@
 /// <reference path="../scripts/typings/jquery/jquery.d.ts" />
 // main class
 var Calculator = (function () {
-    // Contructor
+    // contructor
     function Calculator(output, newNumber, pendingOperation, operationToken, operationTokenOld, runningTotal, pendingValue, lastValue, lastOperation, enableText) {
         // constant variables
         this.ADD = "adding";
@@ -26,21 +26,21 @@ var Calculator = (function () {
         this.lastOperation = lastOperation;
         this.enableText = enableText;
     }
-    // Function
+    // function
     Calculator.prototype.mrcal = function () {
         this.output = "0";
         return this.output;
     };
     Calculator.prototype.mscal = function () {
-        this.enableText = (this.output == "0" ? false : true);
-        return this.output == "0" ? "" : "M";
+        this.enableText = (this.output === "0" ? false : true);
+        return this.output === "0" ? "" : "M";
     };
     Calculator.prototype.mccal = function () {
         return (this.enableText ? "" : "");
     };
     Calculator.prototype.mpluscal = function () {
-        this.enableText = (this.output == "0" ? false : true);
-        return this.output == "0" ? "" : "M";
+        this.enableText = (this.output === "0" ? false : true);
+        return this.output === "0" ? "" : "M";
     };
     Calculator.prototype.msubcal = function () {
         return (this.enableText ? "" : "");
@@ -48,7 +48,7 @@ var Calculator = (function () {
     Calculator.prototype.toNumber = function (numberString) {
         var result = 0;
         if (numberString) {
-            result = numberString * 1;
+            result = parseFloat(numberString) * 1;
         }
         return result;
     };
@@ -61,7 +61,7 @@ var Calculator = (function () {
         return information;
     };
     Calculator.prototype.updateOutput = function (btn) {
-        if (this.output == "0" || this.newNumber) {
+        if (this.output === "0" || this.newNumber) {
             this.output = btn;
             this.newNumber = false;
         }
@@ -74,7 +74,7 @@ var Calculator = (function () {
     };
     Calculator.prototype.add = function (information) {
         this.checkOperator();
-        if (this.FLAG != "ADD") {
+        if (this.FLAG !== "ADD") {
             information.operationTokenInfo = this.setOperationToken(this.ADD);
         }
         information.outputInfo = this.runningTotal.toString();
@@ -86,7 +86,7 @@ var Calculator = (function () {
     };
     Calculator.prototype.subtract = function (information) {
         this.checkOperator();
-        if (this.FLAG != "SUBSTRACT") {
+        if (this.FLAG !== "SUBSTRACT") {
             information.operationTokenInfo = this.setOperationToken(this.SUBSTRACT);
         }
         information.outputInfo = this.runningTotal.toString();
@@ -98,7 +98,7 @@ var Calculator = (function () {
     };
     Calculator.prototype.multiply = function (information) {
         this.checkOperator();
-        if (this.FLAG != "MULTIPLY") {
+        if (this.FLAG !== "MULTIPLY") {
             information.operationTokenInfo = this.setOperationToken(this.MULTIPLY);
         }
         information.outputInfo = this.runningTotal.toString();
@@ -110,7 +110,7 @@ var Calculator = (function () {
     };
     Calculator.prototype.div = function (information) {
         this.checkOperator();
-        if (this.FLAG != "DIV") {
+        if (this.FLAG !== "DIV") {
             information.operationTokenInfo = this.setOperationToken(this.DIV);
         }
         information.outputInfo = this.runningTotal.toString();
@@ -126,8 +126,8 @@ var Calculator = (function () {
             this.pendingValue = this.toNumber(this.output);
             this.lastValue = this.pendingValue;
         }
-        if (this.pendingOperation == this.ADD) {
-            if (this.FLAG == "ADD") {
+        if (this.pendingOperation === this.ADD) {
+            if (this.FLAG === "ADD") {
                 this.CURRENT_VALUE = this.runningTotal;
                 this.runningTotal += this.runningTotal;
             }
@@ -136,8 +136,8 @@ var Calculator = (function () {
             }
             this.lastOperation = this.ADD;
         }
-        else if (this.pendingOperation == this.SUBSTRACT) {
-            if (this.FLAG == "SUBSTRACT") {
+        else if (this.pendingOperation === this.SUBSTRACT) {
+            if (this.FLAG === "SUBSTRACT") {
                 this.CURRENT_VALUE = this.runningTotal;
                 this.runningTotal -= this.runningTotal;
             }
@@ -146,8 +146,8 @@ var Calculator = (function () {
             }
             this.lastOperation = this.SUBSTRACT;
         }
-        else if (this.pendingOperation == this.MULTIPLY) {
-            if (this.FLAG == "MULTIPLY") {
+        else if (this.pendingOperation === this.MULTIPLY) {
+            if (this.FLAG === "MULTIPLY") {
                 this.CURRENT_VALUE = this.runningTotal;
                 this.runningTotal = this.runningTotal * this.runningTotal;
             }
@@ -156,8 +156,8 @@ var Calculator = (function () {
             }
             this.lastOperation = this.MULTIPLY;
         }
-        else if (this.pendingOperation == this.DIV) {
-            if (this.FLAG == "DIV") {
+        else if (this.pendingOperation === this.DIV) {
+            if (this.FLAG === "DIV") {
                 this.CURRENT_VALUE = this.runningTotal;
                 this.runningTotal = this.runningTotal / this.runningTotal;
             }
@@ -168,8 +168,8 @@ var Calculator = (function () {
         }
         else {
             if (this.lastOperation) {
-                if (this.lastOperation == this.ADD) {
-                    if (this.FLAG == "NUMBER") {
+                if (this.lastOperation === this.ADD) {
+                    if (this.FLAG === "NUMBER") {
                         this.runningTotal = this.pendingValue + this.CURRENT_VALUE;
                     }
                     else {
@@ -177,16 +177,16 @@ var Calculator = (function () {
                     }
                 }
                 else {
-                    if (this.lastOperation == this.SUBSTRACT) {
-                        if (this.FLAG == "NUMBER") {
+                    if (this.lastOperation === this.SUBSTRACT) {
+                        if (this.FLAG === "NUMBER") {
                             this.runningTotal = this.pendingValue - this.CURRENT_VALUE;
                         }
                         else {
                             this.runningTotal -= this.CURRENT_VALUE;
                         }
                     }
-                    else if (this.lastOperation == this.MULTIPLY) {
-                        if (this.FLAG == "NUMBER") {
+                    else if (this.lastOperation === this.MULTIPLY) {
+                        if (this.FLAG === "NUMBER") {
                             this.runningTotal = this.pendingValue * this.CURRENT_VALUE;
                         }
                         else {
@@ -194,7 +194,7 @@ var Calculator = (function () {
                         }
                     }
                     else {
-                        if (this.FLAG == "NUMBER") {
+                        if (this.FLAG === "NUMBER") {
                             this.runningTotal = this.pendingValue / this.CURRENT_VALUE;
                         }
                         else {
@@ -209,12 +209,13 @@ var Calculator = (function () {
         }
         this.setOutput(this.runningTotal.toString());
         this.setOperationToken(null);
-        if (this.pendingValue && !this.SET_CURRENT_VALUE)
+        if (this.pendingValue && !this.SET_CURRENT_VALUE) {
             this.CURRENT_VALUE = this.pendingValue;
+        }
         this.pendingOperation = null;
         this.pendingValue = null;
         this.FLAG = "";
-        this.SET_CURRENT_VALUE = true;
+        this.SET_CURRENT_VALUE = false;
         return this.runningTotal;
     };
     Calculator.prototype.clear = function () {
@@ -230,28 +231,28 @@ var Calculator = (function () {
         return "";
     };
     Calculator.prototype.setOperationToken = function (operation) {
-        if (this.FLAG == "NUMBER") {
-            if (operation == this.ADD) {
+        if (this.FLAG === "NUMBER") {
+            if (operation === this.ADD) {
                 this.operationToken += this.output + " " + this.ADD_TOKEN + "  ";
             }
-            else if (operation == this.SUBSTRACT) {
+            else if (operation === this.SUBSTRACT) {
                 this.operationToken += this.output + " " + this.SUBTRACT_TOKEN + "  ";
             }
-            else if (operation == this.MULTIPLY) {
+            else if (operation === this.MULTIPLY) {
                 this.operationToken += this.output + " " + this.MULTIPLY_TOKEN + "  ";
             }
-            else if (operation == this.DIV) {
+            else if (operation === this.DIV) {
                 this.operationToken += this.output + " " + this.DIV_TOKEN + "  ";
             }
             else {
                 this.operationToken = "";
             }
         }
-        else if (this.FLAG == null) {
+        else if (this.FLAG === null) {
             this.operationToken = "";
         }
         else {
-            this.operationToken = this.runningTotal + " " + (operation == this.SUBSTRACT ? this.SUBTRACT_TOKEN : (operation == this.MULTIPLY ? this.MULTIPLY_TOKEN : (operation == this.ADD ? this.ADD_TOKEN : this.DIV_TOKEN))) + "  ";
+            this.operationToken = this.runningTotal + " " + (operation === this.SUBSTRACT ? this.SUBTRACT_TOKEN : (operation === this.MULTIPLY ? this.MULTIPLY_TOKEN : (operation === this.ADD ? this.ADD_TOKEN : this.DIV_TOKEN))) + "  ";
         }
         return this.operationToken;
     };
@@ -260,17 +261,17 @@ var Calculator = (function () {
         this.newNumber = true;
     };
     Calculator.prototype.checkOperator = function () {
-        if (this.pendingValue != null) {
-            if (this.runningTotal && this.pendingOperation == this.SUBSTRACT) {
+        if (this.pendingValue !== null) {
+            if (this.runningTotal && this.pendingOperation === this.SUBSTRACT) {
                 this.runningTotal -= this.pendingValue;
             }
-            else if (this.runningTotal && this.pendingOperation == this.ADD) {
+            else if (this.runningTotal && this.pendingOperation === this.ADD) {
                 this.runningTotal += this.pendingValue;
             }
-            else if (this.runningTotal && this.pendingOperation == this.MULTIPLY) {
+            else if (this.runningTotal && this.pendingOperation === this.MULTIPLY) {
                 this.runningTotal = this.runningTotal * this.pendingValue;
             }
-            else if (this.runningTotal && this.pendingOperation == this.DIV) {
+            else if (this.runningTotal && this.pendingOperation === this.DIV) {
                 this.runningTotal = this.runningTotal / this.pendingValue;
             }
             else {
@@ -284,62 +285,62 @@ var Calculator = (function () {
 // implement function
 window.onload = function () {
     var cal = new Calculator("0", true, null, "", "", null, null, null, null, true);
-    var outputInformation = { outputInfo: "", operationTokenInfo: "" };
+    var IOutputInformation = { outputInfo: "", operationTokenInfo: "" };
     $(".numberbutton").click(function () {
         var _this = this;
-        $("#output").text(function (e) { return cal.updateOutput($(_this).val()); });
+        $("#output").text(function (string) { return cal.updateOutput($(_this).val()); });
     });
     $(".numberdoublebutton").click(function () {
         var _this = this;
-        $("#output").text(function (e) { return cal.updateOutput($(_this).val()); });
+        $("#output").text(function (string) { return cal.updateOutput($(_this).val()); });
     });
     $("#add").click(function () {
-        var info = cal.add(outputInformation);
-        $("#operationToken").text(function (e) { return info.operationTokenInfo; });
-        $("#output").text(function (e) { return info.outputInfo; });
+        var info = cal.add(IOutputInformation);
+        $("#operationToken").text(function (string) { return info.operationTokenInfo; });
+        $("#output").text(function (string) { return info.outputInfo; });
     });
     $("#subtract").click(function () {
-        var info = cal.subtract(outputInformation);
-        $("#operationToken").text(function (e) { return info.operationTokenInfo; });
-        $("#output").text(function (e) { return info.outputInfo; });
+        var info = cal.subtract(IOutputInformation);
+        $("#operationToken").text(function (string) { return info.operationTokenInfo; });
+        $("#output").text(function (string) { return info.outputInfo; });
     });
     $("#multiply").click(function () {
-        var info = cal.multiply(outputInformation);
-        $("#operationToken").text(function (e) { return info.operationTokenInfo; });
-        $("#output").text(function (e) { return info.outputInfo; });
+        var info = cal.multiply(IOutputInformation);
+        $("#operationToken").text(function (string) { return info.operationTokenInfo; });
+        $("#output").text(function (string) { return info.outputInfo; });
     });
     $("#div").click(function () {
-        var info = cal.div(outputInformation);
-        $("#operationToken").text(function (e) { return info.operationTokenInfo; });
-        $("#output").text(function (e) { return info.outputInfo; });
+        var info = cal.div(IOutputInformation);
+        $("#operationToken").text(function (string) { return info.operationTokenInfo; });
+        $("#output").text(function (string) { return info.outputInfo; });
     });
     $("#clear").click(function () {
-        $("#output").text(function (e) { return "0"; });
-        $("#operationToken").text(function (e) { return cal.clear(); });
+        $("#output").text(function (string) { return "0"; });
+        $("#operationToken").text(function (string) { return cal.clear(); });
     });
     $("#calculate").click(function () {
-        $("#output").text(function (e) { return cal.calculate().toString(); });
-        $("#operationToken").text(function (e) { return ""; });
+        $("#output").text(function (string) { return cal.calculate().toString(); });
+        $("#operationToken").text(function (string) { return ""; });
     });
     $("#mr").click(function () {
-        $("#output").text(function (e) { return cal.mrcal(); });
+        $("#output").text(function (string) { return cal.mrcal(); });
     });
     $("#ms").click(function () {
-        $("#changeOutput").text(function (e) { return cal.mscal(); });
+        $("#changeOutput").text(function (string) { return cal.mscal(); });
     });
     $("#mc").click(function () {
-        $("#changeOutput").text(function (e) { return cal.mccal(); });
+        $("#changeOutput").text(function (string) { return cal.mccal(); });
     });
     $("#mplus").click(function () {
-        $("#changeOutput").text(function (e) { return cal.mpluscal(); });
+        $("#changeOutput").text(function (string) { return cal.mpluscal(); });
     });
     $("#msub").click(function () {
-        $("#changeOutput").text(function (e) { return cal.msubcal(); });
+        $("#changeOutput").text(function (string) { return cal.msubcal(); });
     });
     $("#percent").click(function () {
-        var info = cal.percent(outputInformation);
-        $("#operationToken").text(function (e) { return info.operationTokenInfo; });
-        $("#output").text(function (e) { return info.outputInfo; });
+        var info = cal.percent(IOutputInformation);
+        $("#operationToken").text(function (string) { return info.operationTokenInfo; });
+        $("#output").text(function (string) { return info.outputInfo; });
     });
 };
 //# sourceMappingURL=myScript.js.map

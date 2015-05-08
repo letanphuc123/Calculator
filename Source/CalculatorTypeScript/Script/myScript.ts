@@ -2,7 +2,7 @@
 
 // main class
 class Calculator {
-	// Property
+	// property
 	output: string;
 	newNumber: boolean;
 	pendingOperation: string;
@@ -27,9 +27,10 @@ class Calculator {
 	CURRENT_VALUE: number = 0;
 	SET_CURRENT_VALUE: boolean = false;
 
-	// Contructor
-	constructor(output: string, newNumber: boolean, pendingOperation: string, operationToken: string, operationTokenOld: string, runningTotal: number,
-		pendingValue: number, lastValue: number, lastOperation: string, enableText: boolean) {
+	// contructor
+	constructor(output: string, newNumber: boolean, pendingOperation: string, operationToken: string,
+		operationTokenOld: string, runningTotal: number, pendingValue: number, lastValue: number,
+		lastOperation: string, enableText: boolean) {
 		this.output = output;
 		this.newNumber = newNumber;
 		this.pendingOperation = pendingOperation;
@@ -42,15 +43,15 @@ class Calculator {
 		this.enableText = enableText;
 	}
 
-	// Function
+	// function
 	mrcal() {
 		this.output = "0";
 		return this.output;
 	}
 
 	mscal() {
-		this.enableText = (this.output == "0" ? false : true);
-		return this.output == "0" ? "" : "M";
+		this.enableText = (this.output === "0" ? false : true);
+		return this.output === "0" ? "" : "M";
 	}
 
 	mccal() {
@@ -58,23 +59,23 @@ class Calculator {
 	}
 
 	mpluscal() {
-		this.enableText = (this.output == "0" ? false : true);
-		return this.output == "0" ? "" : "M";
+		this.enableText = (this.output === "0" ? false : true);
+		return this.output === "0" ? "" : "M";
 	}
 
 	msubcal() {
 		return (this.enableText ? "" : "");
 	}
 
-	toNumber(numberString) {
+	toNumber(numberString: string) {
 		var result = 0;
 		if (numberString) {
-			result = numberString * 1;
+			result = parseFloat(numberString) * 1;
 		}
 		return result;
 	}
 
-	percent(information: OutputInformation) {
+	percent(information: IOutputInformation) {
 		var result = String((this.runningTotal * this.toNumber(this.output)) / 100);
 		information.outputInfo = result;
 		information.operationTokenInfo = this.operationToken + " " + result;
@@ -84,7 +85,7 @@ class Calculator {
 	}
 
 	updateOutput(btn: string) {
-		if (this.output == "0" || this.newNumber) {
+		if (this.output === "0" || this.newNumber) {
 			this.output = btn;
 			this.newNumber = false;
 		} else {
@@ -95,9 +96,9 @@ class Calculator {
 		return this.output;
 	}
 
-	add(information: OutputInformation) {
+	add(information: IOutputInformation) {
 		this.checkOperator();
-		if (this.FLAG != "ADD") {
+		if (this.FLAG !== "ADD") {
 			information.operationTokenInfo = this.setOperationToken(this.ADD);
 		}
 		information.outputInfo = this.runningTotal.toString();
@@ -108,9 +109,9 @@ class Calculator {
 		return information;
 	}
 
-	subtract(information: OutputInformation) {
+	subtract(information: IOutputInformation) {
 		this.checkOperator();
-		if (this.FLAG != "SUBSTRACT") {
+		if (this.FLAG !== "SUBSTRACT") {
 			information.operationTokenInfo = this.setOperationToken(this.SUBSTRACT);
 		}
 		information.outputInfo = this.runningTotal.toString();
@@ -121,22 +122,22 @@ class Calculator {
 		return information;
 	}
 
-	multiply(information: OutputInformation) {
+	multiply(information: IOutputInformation) {
 		this.checkOperator();
-		if (this.FLAG != "MULTIPLY") {
+		if (this.FLAG !== "MULTIPLY") {
 			information.operationTokenInfo = this.setOperationToken(this.MULTIPLY);
 		}
 		information.outputInfo = this.runningTotal.toString();
 		this.setOutput(String(this.runningTotal));
 		this.pendingOperation = this.MULTIPLY;
-		this.pendingValue = null
+		this.pendingValue = null;
 		this.FLAG = "MULTIPLY";
 		return information;
 	}
 
-	div(information: OutputInformation) {
+	div(information: IOutputInformation) {
 		this.checkOperator();
-		if (this.FLAG != "DIV") {
+		if (this.FLAG !== "DIV") {
 			information.operationTokenInfo = this.setOperationToken(this.DIV);
 		}
 		information.outputInfo = this.runningTotal.toString();
@@ -154,32 +155,32 @@ class Calculator {
 			this.lastValue = this.pendingValue;
 		}
 
-		if (this.pendingOperation == this.ADD) {
-			if (this.FLAG == "ADD") {
+		if (this.pendingOperation === this.ADD) {
+			if (this.FLAG === "ADD") {
 				this.CURRENT_VALUE = this.runningTotal;
 				this.runningTotal += this.runningTotal;
 			} else {
 				this.runningTotal += this.pendingValue;
 			}
 			this.lastOperation = this.ADD;
-		} else if (this.pendingOperation == this.SUBSTRACT) {
-			if (this.FLAG == "SUBSTRACT") {
+		} else if (this.pendingOperation === this.SUBSTRACT) {
+			if (this.FLAG === "SUBSTRACT") {
 				this.CURRENT_VALUE = this.runningTotal;
 				this.runningTotal -= this.runningTotal;
 			} else {
 				this.runningTotal -= this.pendingValue;
 			}
 			this.lastOperation = this.SUBSTRACT;
-		} else if (this.pendingOperation == this.MULTIPLY) {
-			if (this.FLAG == "MULTIPLY") {
+		} else if (this.pendingOperation === this.MULTIPLY) {
+			if (this.FLAG === "MULTIPLY") {
 				this.CURRENT_VALUE = this.runningTotal;
 				this.runningTotal = this.runningTotal * this.runningTotal;
 			} else {
 				this.runningTotal = this.runningTotal * this.pendingValue;
 			}
 			this.lastOperation = this.MULTIPLY;
-		} else if (this.pendingOperation == this.DIV) {
-			if (this.FLAG == "DIV") {
+		} else if (this.pendingOperation === this.DIV) {
+			if (this.FLAG === "DIV") {
 				this.CURRENT_VALUE = this.runningTotal;
 				this.runningTotal = this.runningTotal / this.runningTotal;
 			} else {
@@ -188,27 +189,27 @@ class Calculator {
 			this.lastOperation = this.DIV;
 		} else {
 			if (this.lastOperation) {
-				if (this.lastOperation == this.ADD) {
-					if (this.FLAG == "NUMBER") {
+				if (this.lastOperation === this.ADD) {
+					if (this.FLAG === "NUMBER") {
 						this.runningTotal = this.pendingValue + this.CURRENT_VALUE;
 						} else {
 							this.runningTotal += this.CURRENT_VALUE;
 						}
 					} else {
-					if (this.lastOperation == this.SUBSTRACT) {
-						if (this.FLAG == "NUMBER") {
+					if (this.lastOperation === this.SUBSTRACT) {
+						if (this.FLAG === "NUMBER") {
 							this.runningTotal = this.pendingValue - this.CURRENT_VALUE;
 							} else {
 								this.runningTotal -= this.CURRENT_VALUE;
 							}
-					} else if (this.lastOperation == this.MULTIPLY) {
-						if (this.FLAG == "NUMBER") {
+					} else if (this.lastOperation === this.MULTIPLY) {
+						if (this.FLAG === "NUMBER") {
 							this.runningTotal = this.pendingValue * this.CURRENT_VALUE;
 							} else {
 								this.runningTotal = this.runningTotal * this.CURRENT_VALUE;
 							}
 						} else {
-						if (this.FLAG == "NUMBER") {
+						if (this.FLAG === "NUMBER") {
 							this.runningTotal = this.pendingValue / this.CURRENT_VALUE;
 							} else {
 								this.runningTotal = this.runningTotal / this.CURRENT_VALUE;
@@ -221,12 +222,13 @@ class Calculator {
 		}
 		this.setOutput(this.runningTotal.toString());
 		this.setOperationToken(null);
-		if (this.pendingValue && !this.SET_CURRENT_VALUE)
+		if (this.pendingValue && !this.SET_CURRENT_VALUE) {
 			this.CURRENT_VALUE = this.pendingValue;
+		}
 		this.pendingOperation = null;
 		this.pendingValue = null;
 		this.FLAG = "";
-		this.SET_CURRENT_VALUE = true;
+		this.SET_CURRENT_VALUE = false;
 		return this.runningTotal;
 	}
 
@@ -244,22 +246,24 @@ class Calculator {
 	}
 
 	setOperationToken(operation: string) {
-		if (this.FLAG == "NUMBER") {
-			if (operation == this.ADD) {
+		if (this.FLAG === "NUMBER") {
+			if (operation === this.ADD) {
 				this.operationToken += this.output + " " + this.ADD_TOKEN + "  ";
-			} else if (operation == this.SUBSTRACT) {
+			} else if (operation === this.SUBSTRACT) {
 				this.operationToken += this.output + " " + this.SUBTRACT_TOKEN + "  ";
-			} else if (operation == this.MULTIPLY) {
+			} else if (operation === this.MULTIPLY) {
 				this.operationToken += this.output + " " + this.MULTIPLY_TOKEN + "  ";
-			} else if (operation == this.DIV) {
+			} else if (operation === this.DIV) {
 				this.operationToken += this.output + " " + this.DIV_TOKEN + "  ";
 			} else {
 				this.operationToken = "";
 			}
-		} else if (this.FLAG == null) {
+		} else if (this.FLAG === null) {
 			this.operationToken = "";
 		} else {
-			this.operationToken = this.runningTotal + " " + (operation == this.SUBSTRACT ? this.SUBTRACT_TOKEN : (operation == this.MULTIPLY ? this.MULTIPLY_TOKEN : (operation == this.ADD ? this.ADD_TOKEN : this.DIV_TOKEN))) + "  ";
+			this.operationToken = this.runningTotal + " " + (operation === this.SUBSTRACT ? this.SUBTRACT_TOKEN :
+			(operation === this.MULTIPLY ? this.MULTIPLY_TOKEN : (operation === this.ADD ? this.ADD_TOKEN :
+			this.DIV_TOKEN))) + "  ";
 		}
 		return this.operationToken;
 	}
@@ -270,14 +274,14 @@ class Calculator {
 	}
 
 	checkOperator() {
-		if (this.pendingValue != null) {
-			if (this.runningTotal && this.pendingOperation == this.SUBSTRACT) {
+		if (this.pendingValue !== null) {
+			if (this.runningTotal && this.pendingOperation === this.SUBSTRACT) {
 				this.runningTotal -= this.pendingValue;
-			} else if (this.runningTotal && this.pendingOperation == this.ADD) {
+			} else if (this.runningTotal && this.pendingOperation === this.ADD) {
 				this.runningTotal += this.pendingValue;
-			} else if (this.runningTotal && this.pendingOperation == this.MULTIPLY) {
+			} else if (this.runningTotal && this.pendingOperation === this.MULTIPLY) {
 				this.runningTotal = this.runningTotal * this.pendingValue;
-			} else if (this.runningTotal && this.pendingOperation == this.DIV) {
+			} else if (this.runningTotal && this.pendingOperation === this.DIV) {
 				this.runningTotal = this.runningTotal / this.pendingValue;
 			} else {
 				this.runningTotal = this.pendingValue;
@@ -287,7 +291,7 @@ class Calculator {
 };
 
 // main interface
-interface OutputInformation {
+interface IOutputInformation {
 	outputInfo: string;
 	operationTokenInfo: string;
 }
@@ -295,72 +299,72 @@ interface OutputInformation {
 // implement function
 window.onload = function () {
 	var cal = new Calculator("0", true, null, "", "", null, null, null, null, true);
-	var outputInformation = { outputInfo: "", operationTokenInfo: "" };
+	var IOutputInformation = { outputInfo: "", operationTokenInfo: "" };
 	$(".numberbutton").click(function () {
-		$("#output").text(e => cal.updateOutput($(this).val()));
+		$("#output").text(string => cal.updateOutput($(this).val()));
 	});
 
 	$(".numberdoublebutton").click(function () {
-		$("#output").text(e => cal.updateOutput($(this).val()));
+		$("#output").text(string => cal.updateOutput($(this).val()));
 	});
 
 	$("#add").click(function () {
-		var info = cal.add(outputInformation);
-		$("#operationToken").text(e => info.operationTokenInfo);
-		$("#output").text(e => info.outputInfo);
+		var info = cal.add(IOutputInformation);
+		$("#operationToken").text(string => info.operationTokenInfo);
+		$("#output").text(string => info.outputInfo);
 	});
 
 	$("#subtract").click(function () {
-		var info = cal.subtract(outputInformation);
-		$("#operationToken").text(e => info.operationTokenInfo);
-		$("#output").text(e => info.outputInfo);
+		var info = cal.subtract(IOutputInformation);
+		$("#operationToken").text(string => info.operationTokenInfo);
+		$("#output").text(string => info.outputInfo);
 	});
 
 	$("#multiply").click(function () {
-		var info = cal.multiply(outputInformation);
-		$("#operationToken").text(e => info.operationTokenInfo);
-		$("#output").text(e => info.outputInfo);
+		var info = cal.multiply(IOutputInformation);
+		$("#operationToken").text(string => info.operationTokenInfo);
+		$("#output").text(string => info.outputInfo);
 	});
 
 	$("#div").click(function () {
-		var info = cal.div(outputInformation);
-		$("#operationToken").text(e => info.operationTokenInfo);
-		$("#output").text(e => info.outputInfo);
+		var info = cal.div(IOutputInformation);
+		$("#operationToken").text(string => info.operationTokenInfo);
+		$("#output").text(string => info.outputInfo);
 	});
 
 	$("#clear").click(function () {
-		$("#output").text(e => "0");
-		$("#operationToken").text(e => cal.clear());
+		$("#output").text(string => "0");
+		$("#operationToken").text(string => cal.clear());
 	});
 
 	$("#calculate").click(function () {
-		$("#output").text(e => cal.calculate().toString());
-		$("#operationToken").text(e => "");
+		$("#output").text(string => cal.calculate().toString());
+		$("#operationToken").text(string => "");
 	});
 
 	$("#mr").click(function () {
-		$("#output").text(e => cal.mrcal());
+		$("#output").text(string => cal.mrcal());
 	});
 
 	$("#ms").click(function () {
-		$("#changeOutput").text(e => cal.mscal());
+		$("#changeOutput").text(string => cal.mscal());
 	});
 
 	$("#mc").click(function () {
-		$("#changeOutput").text(e => cal.mccal());
+		$("#changeOutput").text(string => cal.mccal());
 	});
 
 	$("#mplus").click(function () {
-		$("#changeOutput").text(e => cal.mpluscal());
+		$("#changeOutput").text(string => cal.mpluscal());
 	});
 
 	$("#msub").click(function () {
-		$("#changeOutput").text(e => cal.msubcal());
+		$("#changeOutput").text(string => cal.msubcal());
 	});
 
 	$("#percent").click(function () {
-		var info = cal.percent(outputInformation);
-		$("#operationToken").text(e => info.operationTokenInfo);
-		$("#output").text(e => info.outputInfo);
+		var info = cal.percent(IOutputInformation);
+		$("#operationToken").text(string => info.operationTokenInfo);
+		$("#output").text(string => info.outputInfo);
 	});
 };
