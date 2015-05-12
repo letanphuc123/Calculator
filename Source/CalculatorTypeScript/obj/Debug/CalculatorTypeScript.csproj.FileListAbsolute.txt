@@ -51,6 +51,6 @@ D:\Phuc\Github\CalculatorGit\Source\CalculatorTypeScript\bin\System.Web.Razor.xm
 D:\Phuc\Github\CalculatorGit\Source\CalculatorTypeScript\bin\System.Web.WebPages.xml
 D:\Phuc\Github\CalculatorGit\Source\CalculatorTypeScript\bin\System.Web.WebPages.Deployment.xml
 D:\Phuc\Github\CalculatorGit\Source\CalculatorTypeScript\bin\System.Web.WebPages.Razor.xml
-D:\Phuc\Github\CalculatorGit\Source\CalculatorTypeScript\obj\Debug\CalculatorTypeScript.csprojResolveAssemblyReference.cache
 D:\Phuc\Github\CalculatorGit\Source\CalculatorTypeScript\obj\Debug\CalculatorTypeScript.dll
 D:\Phuc\Github\CalculatorGit\Source\CalculatorTypeScript\obj\Debug\CalculatorTypeScript.pdb
+D:\Phuc\Github\CalculatorGit\Source\CalculatorTypeScript\obj\Debug\CalculatorTypeScript.csprojResolveAssemblyReference.cache

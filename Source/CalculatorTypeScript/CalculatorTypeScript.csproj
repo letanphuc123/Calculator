@@ -120,10 +120,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\site.css" />
     <Content Include="Content\angular.css" />
     <Content Include="Global.asax" />
     <Content Include="Script\jquery-1.7.1.min.js" />
-    <Content Include="Script\myScript.js" />
+    <Content Include="Script\myTypeScript.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -145,10 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="Script\myScript.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Script\myScript.js.map" />
+    <TypeScriptCompile Include="Script\myTypeScript.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

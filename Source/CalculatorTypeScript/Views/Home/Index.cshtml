@@ -1,51 +1,37 @@
 ﻿@{
-	ViewBag.Title = "Caculator";
+	ViewBag.Title = "Calculator Application";
 	Layout = null;
 }
+<link href="~/Content/site.css" rel="stylesheet" />
+<script src="~/Script/myTypeScript.js"></script>
 
-<link href="~/Content/angular.css" rel="stylesheet" />
-<script src="~/Script/jquery-1.7.1.min.js"></script>
-<script src="~/Script/myScript.js"></script>
 <div>
-	<div class="calcbodyright">
-		<h2>Calculator with TypeScript</h2>
-		<div id="abc"></div>
-		<br /><br />
-		<div class="calcbody">
-			<div class="thinborder">
-				<label id="changeOutput"></label>
-				<p class="output">
-					<label id="operationToken"></label><br />
-					<input type="text" id="output" maxlength="17" disabled="disabled">
-				</p>
-			</div>
-
-			<div class="calcbuttons">
-				<button class="operationbutton" id="mc" disabled="disabled"> MC </button>
-				<button class="operationbutton" id="mr" disabled="disabled"> MR </button>
-				<button class="operationbutton" id="ms" disabled="disabled"> MS </button>
-				<button class="operationbutton" id="mplus" disabled="disabled"> M+ </button>
-				<button class="operationbutton" id="msub" disabled="disabled"> M- </button>
-				<button class="numberbutton" value="7">7</button>
-				<button class="numberbutton" value="8">8</button>
-				<button class="numberbutton" value="9">9</button>
-				<button class="operationbutton" id="div"> / </button>
-				<button class="operationbutton" id="percent"> % </button>
-				<button class="numberbutton" value="4">4</button>
-				<button class="numberbutton" value="5">5</button>
-				<button class="numberbutton" value="6">6</button>
-				<button class="operationbutton" id="multiply"> * </button>
-				<button class="operationbutton" id="fract" disabled="disabled"> 1/x </button>
-				<button class="numberbutton" value="1">1</button>
-				<button class="numberbutton" value="2">2</button>
-				<button class="numberbutton" value="3">3</button>
-				<button class="operationbutton" id="subtract"> - </button>
-				<button class="operationdoublebutton" id="calculate"> = </button>
-				<button class="numberdoublebutton" value="0">0</button>
-				<button class="operationbutton" id="decimal" disabled="disabled"> . </button>
-				<button class="operationbutton" id="add"> + </button>
-				<button class="clearbutton" id="clear"> CLEAR </button>
-			</div>
+	<div class="calbody">
+		<div class="calresult">
+			<label id="resultToken">dhgh</label><br />
+			<input type="text" id="resultValue" disabled="disabled">
+		</div>
+		<div class="calnumber">
+			<button class="calbtnumber" value="7">7</button>
+			<button class="calbtnumber" value="8">8</button>
+			<button class="calbtnumber" value="9">9</button>
+			<button class="calbtfunction" id="calPlus">+</button>
+			<button class="calbtfunction" id="calMC" disabled="disabled">MC</button>
+			<button class="calbtnumber" value="4">4</button>
+			<button class="calbtnumber" value="5">5</button>
+			<button class="calbtnumber" value="6">6</button>
+			<button class="calbtfunction" id="calSub">-</button>
+			<button class="calbtfunction" id="calMR" disabled="disabled">MR</button>
+			<button class="calbtnumber" value="1">1</button>
+			<button class="calbtnumber" value="2">2</button>
+			<button class="calbtnumber" value="3">3</button>
+			<button class="calbtfunction" id="calDiv">/</button>
+			<button class="calbtfunction" id="calMS" disabled="disabled">MS</button>
+			<button class="calbtdoublenumber" value="0">0</button>
+			<button class="calbtfunction" id="calClear">C</button>
+			<button class="calbtfunction" id="calMul">*</button>
+			<button class="calbtfunction" id="calMPlus" disabled="disabled">M+</button>
+			<button class="calbtfunction" id="calEqual">=</button>
 		</div>
 	</div>
 </div>
