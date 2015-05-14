@@ -12,27 +12,23 @@ var Calculator = (function () {
     }
     // functions
     Calculator.prototype.getResultOperation = function (operation) {
+        this.getResultTotal();
         switch (operation) {
             case 0 /* add */:
                 this._resultToken += this._result + " " + "+" + "  ";
                 this._flag = 1 /* isPlus */;
-                this._outputTotal += this._result;
                 break;
             case 1 /* sub */:
                 this._resultToken += this._result + " " + "-" + "  ";
                 this._flag = 2 /* isSub */;
-                this._outputTotal -= this._result;
                 break;
             case 2 /* div */:
                 this._resultToken += this._result + " " + "/" + "  ";
                 this._flag = 3 /* isDiv */;
-                this._outputTotal = this._outputTotal / this._result;
                 break;
-                ;
             case 3 /* mult */:
                 this._resultToken += this._result + " " + "*" + "  ";
                 this._flag = 4 /* isMul */;
-                this._outputTotal = this._outputTotal * this._result;
                 break;
         }
         var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
@@ -40,8 +36,8 @@ var Calculator = (function () {
     };
     Calculator.prototype.getResultOutput = function (btn) {
         this._result = parseFloat(btn);
-        this._flag = 0 /* isNumber */;
-        return btn;
+        this._outputTotal = (this._flag === 0 /* isNumber */ ? this._result : this._outputTotal);
+        return this._result;
     };
     Calculator.prototype.clearResult = function () {
         this._flag = 0 /* isNumber */;
@@ -52,6 +48,18 @@ var Calculator = (function () {
         this._resultToken = "";
         var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
         return resultOperation;
+    };
+    Calculator.prototype.getFinalResult = function () {
+        this.getResultTotal();
+        this._resultToken = "";
+        this._flag = 0 /* isNumber */;
+        var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
+        return resultOperation;
+    };
+    Calculator.prototype.getResultTotal = function () {
+        if (this._flag !== 0 /* isNumber */) {
+            this._outputTotal = (this._flag === 1 /* isPlus */) ? this._outputTotal + this._result : (this._flag === 2 /* isSub */ ? this._outputTotal - this._result : (this._flag === 3 /* isDiv */ ? this._outputTotal / this._result : this._outputTotal * this._result));
+        }
     };
     return Calculator;
 })();
@@ -80,7 +88,7 @@ window.onload = function () {
     $("#resultValue").val(cal._result.toString());
     $(".calbtnumber").click(function () {
         var _this = this;
-        $("#resultValue").val(function (string) { return cal.getResultOutput($(_this).val()); });
+        $("#resultValue").val(function (string) { return cal.getResultOutput($(_this).val()).toString(); });
     });
     $("#calPlus").click(function () {
         var resultOperation = cal.getResultOperation(0 /* add */);
@@ -104,6 +112,11 @@ window.onload = function () {
     });
     $("#calClear").click(function () {
         var resultOperation = cal.clearResult();
+        $("#resultValue").val(function (string) { return resultOperation.result.toString(); });
+        $("#resultToken").text(function (string) { return resultOperation.resultToken; });
+    });
+    $("#calEqual").click(function () {
+        var resultOperation = cal.getFinalResult();
         $("#resultValue").val(function (string) { return resultOperation.result.toString(); });
         $("#resultToken").text(function (string) { return resultOperation.resultToken; });
     });

@@ -20,26 +20,23 @@ class Calculator implements IResultFunction, IResultInformation {
 
 	// functions
 	getResultOperation(operation: number) {
+		this.getResultTotal();
 		switch (operation) {
 			case ConstantVariable.add:
 				this._resultToken += this._result + " " + "+" + "  ";
 				this._flag = ConstantFlag.isPlus;
-				this._outputTotal += this._result;
 				break;
 			case ConstantVariable.sub:
 				this._resultToken += this._result + " " + "-" + "  ";
 				this._flag = ConstantFlag.isSub;
-				this._outputTotal -= this._result;
 				break;
 			case ConstantVariable.div:
 				this._resultToken += this._result + " " + "/" + "  ";
 				this._flag = ConstantFlag.isDiv;
-				this._outputTotal = this._outputTotal / this._result;
-				break;;
+				break;
 			case ConstantVariable.mult:
 				this._resultToken += this._result + " " + "*" + "  ";
 				this._flag = ConstantFlag.isMul;
-				this._outputTotal = this._outputTotal * this._result;
 				break;
 		}
 		var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
@@ -48,11 +45,11 @@ class Calculator implements IResultFunction, IResultInformation {
 
 	getResultOutput(btn: string) {
 		this._result = parseFloat(btn);
-		this._flag = ConstantFlag.isNumber;
-		return btn;
+		this._outputTotal = (this._flag === ConstantFlag.isNumber ? this._result : this._outputTotal);
+		return this._result;
 	}
 
-	clearResult() {
+	clearResult(): any {
 		this._flag = ConstantFlag.isNumber;
 		this._newNumber = true;
 		this._outputString = "0";
@@ -61,6 +58,22 @@ class Calculator implements IResultFunction, IResultInformation {
 		this._resultToken = "";
 		var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
 		return resultOperation;
+	}
+
+	getFinalResult(): any {
+		this.getResultTotal();
+		this._resultToken = "";
+		this._flag = ConstantFlag.isNumber;
+		var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
+		return resultOperation;
+	}
+
+	getResultTotal(): void {
+		if (this._flag !== ConstantFlag.isNumber) {
+			this._outputTotal = (this._flag === ConstantFlag.isPlus) ? this._outputTotal + this._result :
+			(this._flag === ConstantFlag.isSub ? this._outputTotal - this._result :
+			(this._flag === ConstantFlag.isDiv ? this._outputTotal / this._result : this._outputTotal * this._result));
+		}
 	}
 }
 
@@ -94,7 +107,7 @@ window.onload = function () {
 	var cal = new Calculator(resultInformation._outputString, resultInformation._newNumber, resultInformation._flag, resultInformation._result, resultInformation._resultToken);
 	$("#resultValue").val(cal._result.toString());
 	$(".calbtnumber").click(function () {
-		$("#resultValue").val(string => cal.getResultOutput($(this).val()));
+		$("#resultValue").val(string => cal.getResultOutput($(this).val()).toString());
 	});
 
 	$("#calPlus").click(function () {
@@ -124,5 +137,11 @@ window.onload = function () {
 		var resultOperation = cal.clearResult();
 		$("#resultValue").val(string => resultOperation.result.toString());
 		$("#resultToken").text(string => resultOperation.resultToken);
+	});
+
+	$("#calEqual").click(function () {
+		var resultOperation = cal.getFinalResult();
+		$("#resultValue").val(string => resultOperation.result.toString());
+		$("#resultToken").text(string => resultOperation.resultToken)
 	});
 }
