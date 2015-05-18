@@ -9,6 +9,8 @@ module CalculatorModule {
 		_flag: number;
 		_result: number;
 		_resultToken: string;
+		_isAgain: boolean;
+		_lastValue: number;
 		// constructor
 		constructor(outputString: string, newNumber: boolean, flag: number, result: number, resultToken: string) {
 			this._outputString = outputString;
@@ -17,6 +19,8 @@ module CalculatorModule {
 			this._result = result;
 			this._resultToken = resultToken;
 			this._outputTotal = 0;
+			this._isAgain = false;
+			this._lastValue = 0;
 		}
 
 		// functions
@@ -53,6 +57,7 @@ module CalculatorModule {
 		clearResult(): any {
 			this._flag = ConstantFlag.isNumber;
 			this._newNumber = true;
+			this._isAgain = false;
 			this._outputString = "0";
 			this._outputTotal = 0;
 			this._result = 0;
@@ -64,13 +69,13 @@ module CalculatorModule {
 		getFinalResult(): any {
 			this.getResultTotal();
 			this._resultToken = "";
-			this._flag = ConstantFlag.isNumber;
+			this._isAgain = true;
 			var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
 			return resultOperation;
 		}
 
 		getResultTotal(): void {
-			if (this._flag !== ConstantFlag.isNumber) {
+			if (this._flag !== ConstantFlag.isNumber || this._isAgain) {
 				this._outputTotal = (this._flag === ConstantFlag.isPlus) ? this._outputTotal + this._result :
 				(this._flag === ConstantFlag.isSub ? this._outputTotal - this._result :
 				(this._flag === ConstantFlag.isDiv ? this._outputTotal / this._result :
