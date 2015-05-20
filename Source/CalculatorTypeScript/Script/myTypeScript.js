@@ -3,52 +3,45 @@ var CalculatorModule;
 (function (CalculatorModule) {
     var Calculator = (function () {
         // constructor
-        function Calculator(outputString, newNumber, flag, result, resultToken) {
+        function Calculator(outputString, isNumber, flag, result, resultToken) {
             this._outputString = outputString;
-            this._newNumber = newNumber;
+            this._isNumber = isNumber;
             this._flag = flag;
             this._result = result;
             this._resultToken = resultToken;
             this._outputTotal = 0;
             this._isAgain = false;
-            this._lastValue = 0;
+            this._oldToken = "";
         }
         // functions
-        Calculator.prototype.getResultOperation = function (operation) {
-            this.getResultTotal();
-            switch (operation) {
-                case 0 /* add */:
-                    this._resultToken += this._result + " " + "+" + "  ";
-                    this._flag = 1 /* isPlus */;
-                    break;
-                case 1 /* sub */:
-                    this._resultToken += this._result + " " + "-" + "  ";
-                    this._flag = 2 /* isSub */;
-                    break;
-                case 2 /* div */:
-                    this._resultToken += this._result + " " + "/" + "  ";
-                    this._flag = 3 /* isDiv */;
-                    break;
-                case 3 /* mult */:
-                    this._resultToken += this._result + " " + "*" + "  ";
-                    this._flag = 4 /* isMul */;
-                    break;
+        Calculator.prototype.getResultOperation = function (operation, flag) {
+            if (this._isNumber) {
+                this.getResultTotal();
+                this._oldToken = this._resultToken + this._result + " ";
+                this._resultToken += this._result + " " + (operation === 0 /* add */ ? "+" : (operation === 1 /* sub */ ? "-" : (operation === 2 /* div */ ? "/" : "*"))) + "  ";
             }
+            else {
+                this._resultToken = this._oldToken + (operation === 0 /* add */ ? "+" : (operation === 1 /* sub */ ? "-" : (operation === 2 /* div */ ? "/" : "*"))) + "  ";
+            }
+            this._flag = flag;
+            this._isNumber = false;
             var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
             return resultOperation;
         };
         Calculator.prototype.getResultOutput = function (btn) {
-            this._result = parseFloat(btn);
+            this._result = this._isNumber ? parseFloat(this._result + btn) : parseFloat(btn);
             this._outputTotal = (this._flag === 0 /* isNumber */ ? this._result : this._outputTotal);
+            this._isNumber = true;
             return this._result;
         };
         Calculator.prototype.clearResult = function () {
             this._flag = 0 /* isNumber */;
-            this._newNumber = true;
+            this._isNumber = false;
             this._isAgain = false;
             this._outputString = "0";
             this._outputTotal = 0;
             this._result = 0;
+            this._oldToken = "";
             this._resultToken = "";
             var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
             return resultOperation;
@@ -56,7 +49,9 @@ var CalculatorModule;
         Calculator.prototype.getFinalResult = function () {
             this.getResultTotal();
             this._resultToken = "";
+            this._oldToken = "";
             this._isAgain = true;
+            this._isNumber = false;
             var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
             return resultOperation;
         };

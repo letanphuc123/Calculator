@@ -5,62 +5,57 @@ module CalculatorModule {
 		// properties
 		_outputString: string;
 		_outputTotal: number;
-		_newNumber: boolean;
+		_isNumber: boolean;
 		_flag: number;
 		_result: number;
 		_resultToken: string;
 		_isAgain: boolean;
-		_lastValue: number;
+		_oldToken: string;
 		// constructor
-		constructor(outputString: string, newNumber: boolean, flag: number, result: number, resultToken: string) {
+		constructor(outputString: string, isNumber: boolean, flag: number, result: number, resultToken: string) {
 			this._outputString = outputString;
-			this._newNumber = newNumber;
+			this._isNumber = isNumber;
 			this._flag = flag;
 			this._result = result;
 			this._resultToken = resultToken;
 			this._outputTotal = 0;
 			this._isAgain = false;
-			this._lastValue = 0;
+			this._oldToken = "";
 		}
 
 		// functions
-		getResultOperation(operation: number) {
-			this.getResultTotal();
-			switch (operation) {
-				case ConstantVariable.add:
-					this._resultToken += this._result + " " + "+" + "  ";
-					this._flag = ConstantFlag.isPlus;
-					break;
-				case ConstantVariable.sub:
-					this._resultToken += this._result + " " + "-" + "  ";
-					this._flag = ConstantFlag.isSub;
-					break;
-				case ConstantVariable.div:
-					this._resultToken += this._result + " " + "/" + "  ";
-					this._flag = ConstantFlag.isDiv;
-					break;
-				case ConstantVariable.mult:
-					this._resultToken += this._result + " " + "*" + "  ";
-					this._flag = ConstantFlag.isMul;
-					break;
+		getResultOperation(operation: number, flag: number) {
+			if (this._isNumber) {
+				this.getResultTotal();
+				this._oldToken = this._resultToken + this._result + " ";
+				this._resultToken += this._result + " " + (operation === ConstantVariable.add ? "+" :
+				(operation === ConstantVariable.sub ? "-" : (operation === ConstantVariable.div ? "/" : "*"))) + "  ";
+			} else {
+				this._resultToken = this._oldToken + (operation === ConstantVariable.add ? "+" :
+				(operation === ConstantVariable.sub ? "-" : (operation === ConstantVariable.div ? "/" : "*"))) + "  ";
 			}
+			
+			this._flag = flag;
+			this._isNumber = false;
 			var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
 			return resultOperation;
 		}
 
 		getResultOutput(btn: string) {
-			this._result = parseFloat(btn);
+			this._result = this._isNumber ? parseFloat(this._result + btn) : parseFloat(btn);
 			this._outputTotal = (this._flag === ConstantFlag.isNumber ? this._result : this._outputTotal);
+			this._isNumber = true;
 			return this._result;
 		}
 
 		clearResult(): any {
 			this._flag = ConstantFlag.isNumber;
-			this._newNumber = true;
+			this._isNumber = false;
 			this._isAgain = false;
 			this._outputString = "0";
 			this._outputTotal = 0;
 			this._result = 0;
+			this._oldToken = "";
 			this._resultToken = "";
 			var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
 			return resultOperation;
@@ -69,7 +64,9 @@ module CalculatorModule {
 		getFinalResult(): any {
 			this.getResultTotal();
 			this._resultToken = "";
+			this._oldToken = "";
 			this._isAgain = true;
+			this._isNumber = false;
 			var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
 			return resultOperation;
 		}

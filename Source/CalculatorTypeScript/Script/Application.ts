@@ -5,10 +5,10 @@
 // implement function
 window.onload = function () {
 	var resultInformation = <CalculatorModule.IResultInformation>{
-		_outputString: "0", _newNumber: true,
+		_outputString: "0", _isNumber: false,
 		_flag: CalculatorModule.ConstantFlag.isNumber, _result: 0, _resultToken: ""
 	};
-	var cal = new CalculatorModule.Calculator(resultInformation._outputString, resultInformation._newNumber,
+	var cal = new CalculatorModule.Calculator(resultInformation._outputString, resultInformation._isNumber,
 		resultInformation._flag, resultInformation._result, resultInformation._resultToken);
 
 	$("#resultValue").val(cal._result.toString());
@@ -17,24 +17,24 @@ window.onload = function () {
 	});
 
 	$("#calPlus").click(function () {
-		var resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.add);
+		var resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.add, CalculatorModule.ConstantFlag.isPlus);
 		$("#resultValue").val(string => resultOperation.result.toString());
 		$("#resultToken").text(string => resultOperation.resultToken);
 	});
 	$("#calSub").click(function () {
-		var resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.sub);
+		var resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.sub, CalculatorModule.ConstantFlag.isSub);
 		$("#resultValue").val(string => resultOperation.result.toString());
 		$("#resultToken").text(string => resultOperation.resultToken);
 	});
 
 	$("#calDiv").click(function () {
-		var resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.div);
+		var resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.div, CalculatorModule.ConstantFlag.isDiv);
 		$("#resultValue").val(string => resultOperation.result.toString());
 		$("#resultToken").text(string => resultOperation.resultToken);
 	});
 
 	$("#calMul").click(function () {
-		var resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.mult);
+		var resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.mult, CalculatorModule.ConstantFlag.isMul);
 		$("#resultValue").val(string => resultOperation.result.toString());
 		$("#resultToken").text(string => resultOperation.resultToken);
 	});
