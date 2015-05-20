@@ -1,53 +1,48 @@
 ﻿/// <reference path="../scripts/typings/jquery/jquery.d.ts" />
-/// <reference path="interface.ts" />
 /// <reference path="mytypescript.ts" />
 
 // implement function
 window.onload = function () {
-	var resultInformation = <CalculatorModule.IResultInformation>{
-		_outputString: "0", _isNumber: false,
-		_flag: CalculatorModule.ConstantFlag.isNumber, _result: 0, _resultToken: ""
-	};
-	var cal = new CalculatorModule.Calculator(resultInformation._outputString, resultInformation._isNumber,
-		resultInformation._flag, resultInformation._result, resultInformation._resultToken);
+	var cal = new CalculatorModule.Calculator("0", false, CalculatorModule.ConstantFlag.isNumber, 0, "", 0, false, "");
+	var valueElement = $(".calbody #resultValue");
+	var tokenElement = $(".calbody #resultToken");
+	valueElement.val(cal._result.toString());
 
-	$("#resultValue").val(cal._result.toString());
-	$(".calbtnumber").click(function () {
-		$("#resultValue").val(string => cal.getResultOutput($(this).val()).toString());
+	$(".calbody .calbtnumber").click(function () {
+		showResultElement(cal.getResultOutput($(this).val()).toString(), tokenElement.text());
 	});
 
-	$("#calPlus").click(function () {
+	$(".calbody #calPlus").click(function () {
 		var resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.add, CalculatorModule.ConstantFlag.isPlus);
-		$("#resultValue").val(string => resultOperation.result.toString());
-		$("#resultToken").text(string => resultOperation.resultToken);
+		showResultElement(resultOperation.result.toString(), resultOperation.resultToken);
 	});
-	$("#calSub").click(function () {
+	$(".calbody #calSub").click(function () {
 		var resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.sub, CalculatorModule.ConstantFlag.isSub);
-		$("#resultValue").val(string => resultOperation.result.toString());
-		$("#resultToken").text(string => resultOperation.resultToken);
+		showResultElement(resultOperation.result.toString(), resultOperation.resultToken);
 	});
 
-	$("#calDiv").click(function () {
+	$(".calbody #calDiv").click(function () {
 		var resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.div, CalculatorModule.ConstantFlag.isDiv);
-		$("#resultValue").val(string => resultOperation.result.toString());
-		$("#resultToken").text(string => resultOperation.resultToken);
+		showResultElement(resultOperation.result.toString(), resultOperation.resultToken);
 	});
 
-	$("#calMul").click(function () {
+	$(".calbody #calMul").click(function () {
 		var resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.mult, CalculatorModule.ConstantFlag.isMul);
-		$("#resultValue").val(string => resultOperation.result.toString());
-		$("#resultToken").text(string => resultOperation.resultToken);
+		showResultElement(resultOperation.result.toString(), resultOperation.resultToken);
 	});
 
-	$("#calClear").click(function () {
+	$(".calbody #calClear").click(function () {
 		var resultOperation = cal.clearResult();
-		$("#resultValue").val(string => resultOperation.result.toString());
-		$("#resultToken").text(string => resultOperation.resultToken);
+		showResultElement(resultOperation.result.toString(), resultOperation.resultToken);
 	});
 
-	$("#calEqual").click(function () {
+	$(".calbody #calEqual").click(function () {
 		var resultOperation = cal.getFinalResult();
-		$("#resultValue").val(string => resultOperation.result.toString());
-		$("#resultToken").text(string => resultOperation.resultToken)
+		showResultElement(resultOperation.result.toString(), resultOperation.resultToken);
 	});
+
+	function showResultElement(value: string, token: string): void {
+		valueElement.val(string => value);
+		tokenElement.text(string => token);
+	};
 }

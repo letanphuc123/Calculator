@@ -1,26 +1,8 @@
-﻿/// <reference path="interface.ts" />
-
-module CalculatorModule {
-	export class Calculator implements IResultFunction, IResultInformation {
-		// properties
-		_outputString: string;
-		_outputTotal: number;
-		_isNumber: boolean;
-		_flag: number;
-		_result: number;
-		_resultToken: string;
-		_isAgain: boolean;
-		_oldToken: string;
+﻿module CalculatorModule {
+	export class Calculator {
 		// constructor
-		constructor(outputString: string, isNumber: boolean, flag: number, result: number, resultToken: string) {
-			this._outputString = outputString;
-			this._isNumber = isNumber;
-			this._flag = flag;
-			this._result = result;
-			this._resultToken = resultToken;
-			this._outputTotal = 0;
-			this._isAgain = false;
-			this._oldToken = "";
+		constructor(public _outputString: string, public _isNumber: boolean, public _flag: number, public _result: number, public _resultToken: string,
+			public _outputTotal: number, public _isAgain: boolean, public _oldToken: string) {
 		}
 
 		// functions

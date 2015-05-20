@@ -1,17 +1,16 @@
-/// <reference path="interface.ts" />
 var CalculatorModule;
 (function (CalculatorModule) {
     var Calculator = (function () {
         // constructor
-        function Calculator(outputString, isNumber, flag, result, resultToken) {
-            this._outputString = outputString;
-            this._isNumber = isNumber;
-            this._flag = flag;
-            this._result = result;
-            this._resultToken = resultToken;
-            this._outputTotal = 0;
-            this._isAgain = false;
-            this._oldToken = "";
+        function Calculator(_outputString, _isNumber, _flag, _result, _resultToken, _outputTotal, _isAgain, _oldToken) {
+            this._outputString = _outputString;
+            this._isNumber = _isNumber;
+            this._flag = _flag;
+            this._result = _result;
+            this._resultToken = _resultToken;
+            this._outputTotal = _outputTotal;
+            this._isAgain = _isAgain;
+            this._oldToken = _oldToken;
         }
         // functions
         Calculator.prototype.getResultOperation = function (operation, flag) {

@@ -124,7 +124,6 @@
     <Content Include="Content\angular.css" />
     <Content Include="Global.asax" />
     <Content Include="Script\Application.js" />
-    <Content Include="Script\Interface.js" />
     <Content Include="Script\jquery-1.7.1.min.js" />
     <Content Include="Script\mytypescript.js" />
     <Content Include="Web.config" />
@@ -149,14 +148,10 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="Script\Application.ts" />
-    <TypeScriptCompile Include="Script\Interface.ts" />
     <TypeScriptCompile Include="Script\myTypeScript.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Script\Application.js.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Script\Interface.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Script\mytypescript.js.map" />
