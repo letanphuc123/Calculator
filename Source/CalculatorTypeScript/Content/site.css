@@ -1,8 +1,8 @@
-﻿.calbody {
+﻿.calbody_first, calbody_second{
 	width: 226px;
 	height: auto;
-	float: left;
-	margin: 100px 0px 0px 500px;
+	/*float: left;*/
+	/*margin: 100px 0px 0px 500px;*/
 
 }
 	.caloperator {

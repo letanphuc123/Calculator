@@ -1,3 +1,4 @@
+/// <reference path="../scripts/typings/jquery/jquery.d.ts" />
 // define constructor /* module */ /* class */
 var CalculatorModule;
 (function (CalculatorModule) {
@@ -14,6 +15,7 @@ var CalculatorModule;
             this._oldToken = _oldToken;
         }
         // functions
+        // implement operator /* add */ /* subtract */ /* div */ /* multiply */
         Calculator.prototype.getResultOperation = function (operation, flag) {
             if (this._isNumber) {
                 this.getResultTotal();
@@ -28,12 +30,14 @@ var CalculatorModule;
             var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
             return resultOperation;
         };
+        // implement number button /* 0 -> 9 */
         Calculator.prototype.getResultOutput = function (btn) {
             this._result = this._isNumber ? parseFloat(this._result + btn) : parseFloat(btn);
             this._outputTotal = (this._flag === 0 /* isNumber */ ? this._result : this._outputTotal);
             this._isNumber = true;
             return this._result;
         };
+        // implement clear operator /* c */
         Calculator.prototype.clearResult = function () {
             this._flag = 0 /* isNumber */;
             this._isNumber = false;
@@ -46,6 +50,7 @@ var CalculatorModule;
             var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
             return resultOperation;
         };
+        // implement equal operator /* = */
         Calculator.prototype.getFinalResult = function () {
             this.getResultTotal();
             this._resultToken = "";
@@ -55,6 +60,7 @@ var CalculatorModule;
             var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
             return resultOperation;
         };
+        // get value final result currently
         Calculator.prototype.getResultTotal = function () {
             if (this._flag !== 0 /* isNumber */ || this._isAgain) {
                 this._outputTotal = (this._flag === 1 /* isPlus */) ? this._outputTotal + this._result : (this._flag === 2 /* isSub */ ? this._outputTotal - this._result : (this._flag === 3 /* isDiv */ ? this._outputTotal / this._result : this._outputTotal * this._result));
@@ -85,11 +91,11 @@ var CalculatorModule;
 // implement function
 window.onload = function () {
     var cal = new CalculatorModule.Calculator("0", false, 0 /* isNumber */, 0, "", 0, false, "");
-    var valueElement = $(".calbody .resultValue");
-    var tokenElement = $(".calbody .resultToken");
-    var btElemment = $(".calbody .calbt");
-    var resultOperation = { result: cal._result, resultToken: cal._resultToken };
-    btElemment.click(function () {
+    $("button").click(function () {
+        var valueElement = $("." + $(this).parent().parent().attr('class') + " .resultValue");
+        var tokenElement = $("." + $(this).parent().parent().attr('class') + " .resultToken");
+        var btElemment = $("." + $(this).parent().parent().attr('class') + " .calbt");
+        var resultOperation = { result: cal._result, resultToken: cal._resultToken };
         switch ($(this).val()) {
             case "+":
                 resultOperation = cal.getResultOperation(0 /* add */, 1 /* isPlus */);
@@ -117,4 +123,4 @@ window.onload = function () {
         tokenElement.text(function (string) { return resultOperation.resultToken; });
     });
 };
-//# sourceMappingURL=mytypescript.js.map
+//# sourceMappingURL=myTypeScript.js.map

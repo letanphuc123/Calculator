@@ -1,4 +1,6 @@
-﻿// define constructor /* module */ /* class */
+﻿/// <reference path="../scripts/typings/jquery/jquery.d.ts" />
+
+// define constructor /* module */ /* class */
 module CalculatorModule {
 	export class Calculator {
 		// constructor
@@ -7,6 +9,7 @@ module CalculatorModule {
 		}
 
 		// functions
+		// implement operator /* add */ /* subtract */ /* div */ /* multiply */
 		getResultOperation(operation: number, flag: number): any {
 			if (this._isNumber) {
 				this.getResultTotal();
@@ -24,6 +27,7 @@ module CalculatorModule {
 			return resultOperation;
 		}
 
+		// implement number button /* 0 -> 9 */
 		getResultOutput(btn: string): number {
 			this._result = this._isNumber ? parseFloat(this._result + btn) : parseFloat(btn);
 			this._outputTotal = (this._flag === ConstantFlag.isNumber ? this._result : this._outputTotal);
@@ -31,6 +35,7 @@ module CalculatorModule {
 			return this._result;
 		}
 
+		// implement clear operator /* c */
 		clearResult(): any {
 			this._flag = ConstantFlag.isNumber;
 			this._isNumber = false;
@@ -44,6 +49,7 @@ module CalculatorModule {
 			return resultOperation;
 		}
 
+		// implement equal operator /* = */
 		getFinalResult(): any {
 			this.getResultTotal();
 			this._resultToken = "";
@@ -54,6 +60,7 @@ module CalculatorModule {
 			return resultOperation;
 		}
 
+		// get value final result currently
 		getResultTotal(): void {
 			if (this._flag !== ConstantFlag.isNumber || this._isAgain) {
 				this._outputTotal = (this._flag === ConstantFlag.isPlus) ? this._outputTotal + this._result :
@@ -70,14 +77,14 @@ module CalculatorModule {
 }
 
 // implement function
-window.onload = function () {
+window.onload = function() {
 	var cal = new CalculatorModule.Calculator("0", false, CalculatorModule.ConstantFlag.isNumber, 0, "", 0, false, "");
-	var valueElement = $(".calbody .resultValue");
-	var tokenElement = $(".calbody .resultToken");
-	var btElemment = $(".calbody .calbt");
-	var resultOperation = { result: cal._result, resultToken: cal._resultToken };
-
-	btElemment.click(function () {
+	
+	$("button").click(function () {
+		var valueElement = $("." + $(this).parent().parent().attr('class') + " .resultValue");
+		var tokenElement = $("." + $(this).parent().parent().attr('class') + " .resultToken");
+		var btElemment = $("." + $(this).parent().parent().attr('class') + " .calbt");
+		var resultOperation = { result: cal._result, resultToken: cal._resultToken };
 		switch ($(this).val()) {
 			case "+":
 				resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.add, CalculatorModule.ConstantFlag.isPlus);

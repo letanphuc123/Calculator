@@ -13,7 +13,8 @@ namespace CalculatorTypeScript.Controllers
 
 		public ActionResult Index()
 		{
-			return View();
+			var model = new List<string>() { "calbody_first", "calbody_second" };
+			return View(model);
 		}
 
 	}
