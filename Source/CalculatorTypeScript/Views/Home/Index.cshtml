@@ -5,35 +5,34 @@
 <link href="~/Content/site.css" rel="stylesheet" />
 <script src="~/Script/jquery-1.7.1.min.js"></script>
 <script src="~/Script/mytypescript.js"></script>
-<script src="~/Script/Application.js"></script>
 
 <div>
 	<div class="calbody">
 		<div class="calresult">
-			<label id="resultToken"></label><br />
-			<input type="text" id="resultValue" disabled="disabled" maxlength="10">
+			<label class="resultToken"></label><br />
+			<input type="text" class="resultValue" disabled="disabled" maxlength="10" value="0">
 		</div>
-		<div class="calnumber">
-			<button class="calbtnumber" value="7">7</button>
-			<button class="calbtnumber" value="8">8</button>
-			<button class="calbtnumber" value="9">9</button>
-			<button class="calbtfunction" id="calPlus">+</button>
-			<button class="calbtfunction" id="calMC" disabled="disabled">MC</button>
-			<button class="calbtnumber" value="4">4</button>
-			<button class="calbtnumber" value="5">5</button>
-			<button class="calbtnumber" value="6">6</button>
-			<button class="calbtfunction" id="calSub">-</button>
-			<button class="calbtfunction" id="calMR" disabled="disabled">MR</button>
-			<button class="calbtnumber" value="1">1</button>
-			<button class="calbtnumber" value="2">2</button>
-			<button class="calbtnumber" value="3">3</button>
-			<button class="calbtfunction" id="calDiv">/</button>
-			<button class="calbtfunction" id="calMS" disabled="disabled">MS</button>
-			<button class="calbtnumber" style="width:86px;" value="0">0</button>
-			<button class="calbtfunction" id="calClear">C</button>
-			<button class="calbtfunction" id="calMul">*</button>
-			<button class="calbtfunction" id="calMPlus" disabled="disabled">M+</button>
-			<button class="calbtfunction" id="calEqual">=</button>
+		<div class="caloperator">
+			<button class="calbt" value="7">7</button>
+			<button class="calbt" value="8">8</button>
+			<button class="calbt" value="9">9</button>
+			<button class="calbt" value="+">+</button>
+			<button class="calbt" disabled="disabled">MC</button>
+			<button class="calbt" value="4">4</button>
+			<button class="calbt" value="5">5</button>
+			<button class="calbt" value="6">6</button>
+			<button class="calbt" value="-">-</button>
+			<button class="calbt" disabled="disabled">MR</button>
+			<button class="calbt" value="1">1</button>
+			<button class="calbt" value="2">2</button>
+			<button class="calbt" value="3">3</button>
+			<button class="calbt" value="/">/</button>
+			<button class="calbt" disabled="disabled">MS</button>
+			<button class="calbt" style="width:86px;" value="0">0</button>
+			<button class="calbt" value="c">C</button>
+			<button class="calbt" value="*">*</button>
+			<button class="calbt" disabled="disabled">M+</button>
+			<button class="calbt" value="=">=</button>
 		</div>
 	</div>
 </div>

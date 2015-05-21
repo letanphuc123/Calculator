@@ -5,12 +5,12 @@
 	margin: 100px 0px 0px 500px;
 
 }
-	.calnumber {
+	.caloperator {
 		width: 100%;
 		height: auto;
 	}
 
-		.calnumber .calbtnumber, .calbtfunction {
+		.caloperator .calbt{
 			width: 40px;
 			height: 30px;
 			padding: 5px;
@@ -23,7 +23,7 @@
 		background:black;
 	}
 
-		.calresult #resultValue {
+		.calresult .resultValue {
 			width: 89%;
 			background:black;
 			color:#ff0000;
@@ -35,7 +35,7 @@
 			border: none;
 		}
 
-		.calresult #resultToken {
+		.calresult .resultToken {
 			width: 200px;
 			color:#ff0000;
 			font-family: "Courier New", Courier;

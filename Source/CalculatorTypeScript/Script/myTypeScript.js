@@ -1,3 +1,4 @@
+// define constructor /* module */ /* class */
 var CalculatorModule;
 (function (CalculatorModule) {
     var Calculator = (function () {
@@ -81,4 +82,39 @@ var CalculatorModule;
     var ConstantFlag = CalculatorModule.ConstantFlag;
     ;
 })(CalculatorModule || (CalculatorModule = {}));
+// implement function
+window.onload = function () {
+    var cal = new CalculatorModule.Calculator("0", false, 0 /* isNumber */, 0, "", 0, false, "");
+    var valueElement = $(".calbody .resultValue");
+    var tokenElement = $(".calbody .resultToken");
+    var btElemment = $(".calbody .calbt");
+    var resultOperation = { result: cal._result, resultToken: cal._resultToken };
+    btElemment.click(function () {
+        switch ($(this).val()) {
+            case "+":
+                resultOperation = cal.getResultOperation(0 /* add */, 1 /* isPlus */);
+                break;
+            case "-":
+                resultOperation = cal.getResultOperation(1 /* sub */, 2 /* isSub */);
+                break;
+            case "/":
+                resultOperation = cal.getResultOperation(2 /* div */, 3 /* isDiv */);
+                break;
+            case "*":
+                resultOperation = cal.getResultOperation(3 /* mult */, 4 /* isMul */);
+                break;
+            case "=":
+                resultOperation = cal.getFinalResult();
+                break;
+            case "c":
+                resultOperation = cal.clearResult();
+                break;
+            default:
+                resultOperation = { result: cal.getResultOutput($(this).val()), resultToken: tokenElement.text() };
+                break;
+        }
+        valueElement.val(function (string) { return resultOperation.result.toString(); });
+        tokenElement.text(function (string) { return resultOperation.resultToken; });
+    });
+};
 //# sourceMappingURL=mytypescript.js.map

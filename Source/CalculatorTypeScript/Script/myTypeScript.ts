@@ -1,4 +1,5 @@
-﻿module CalculatorModule {
+﻿// define constructor /* module */ /* class */
+module CalculatorModule {
 	export class Calculator {
 		// constructor
 		constructor(public _outputString: string, public _isNumber: boolean, public _flag: number, public _result: number, public _resultToken: string,
@@ -6,7 +7,7 @@
 		}
 
 		// functions
-		getResultOperation(operation: number, flag: number) {
+		getResultOperation(operation: number, flag: number): any {
 			if (this._isNumber) {
 				this.getResultTotal();
 				this._oldToken = this._resultToken + this._result + " ";
@@ -23,7 +24,7 @@
 			return resultOperation;
 		}
 
-		getResultOutput(btn: string) {
+		getResultOutput(btn: string): number {
 			this._result = this._isNumber ? parseFloat(this._result + btn) : parseFloat(btn);
 			this._outputTotal = (this._flag === ConstantFlag.isNumber ? this._result : this._outputTotal);
 			this._isNumber = true;
@@ -66,4 +67,41 @@
 	// enum
 	export enum ConstantVariable { add, sub, div, mult };
 	export enum ConstantFlag { isNumber, isPlus, isSub, isDiv, isMul };
+}
+
+// implement function
+window.onload = function () {
+	var cal = new CalculatorModule.Calculator("0", false, CalculatorModule.ConstantFlag.isNumber, 0, "", 0, false, "");
+	var valueElement = $(".calbody .resultValue");
+	var tokenElement = $(".calbody .resultToken");
+	var btElemment = $(".calbody .calbt");
+	var resultOperation = { result: cal._result, resultToken: cal._resultToken };
+
+	btElemment.click(function () {
+		switch ($(this).val()) {
+			case "+":
+				resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.add, CalculatorModule.ConstantFlag.isPlus);
+				break;
+			case "-":
+				resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.sub, CalculatorModule.ConstantFlag.isSub);
+				break;
+			case "/":
+				resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.div, CalculatorModule.ConstantFlag.isDiv);
+				break;
+			case "*":
+				resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.mult, CalculatorModule.ConstantFlag.isMul);
+				break;
+			case "=":
+				resultOperation = cal.getFinalResult();
+				break;
+			case "c":
+				resultOperation = cal.clearResult();
+				break;
+			default:
+				resultOperation = { result: cal.getResultOutput($(this).val()), resultToken: tokenElement.text() };
+				break;
+		}
+		valueElement.val(string => resultOperation.result.toString());
+		tokenElement.text(string => resultOperation.resultToken);
+	});
 }
