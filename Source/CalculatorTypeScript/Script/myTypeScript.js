@@ -89,38 +89,45 @@ var CalculatorModule;
     ;
 })(CalculatorModule || (CalculatorModule = {}));
 // implement function
-window.onload = function () {
-    var cal = new CalculatorModule.Calculator("0", false, 0 /* isNumber */, 0, "", 0, false, "");
-    $("button").click(function () {
-        var valueElement = $("." + $(this).parent().parent().attr('class') + " .resultValue");
-        var tokenElement = $("." + $(this).parent().parent().attr('class') + " .resultToken");
-        var btElemment = $("." + $(this).parent().parent().attr('class') + " .calbt");
-        var resultOperation = { result: cal._result, resultToken: cal._resultToken };
-        switch ($(this).val()) {
+$(document).ready(function () {
+    var cal_first = new CalculatorModule.Calculator("0", false, 0 /* isNumber */, 0, "", 0, false, "");
+    var cal_second = new CalculatorModule.Calculator("0", false, 0 /* isNumber */, 0, "", 0, false, "");
+    $("#calbody_first").find("button").click(function () {
+        showResult("#calbody_first", cal_first, $(this).val());
+    });
+    $("#calbody_second").find("button").click(function () {
+        showResult("#calbody_second", cal_second, $(this).val());
+    });
+    function showResult(parentElement, parentClass, value) {
+        var valueElement = $(parentElement + " .resultValue");
+        var tokenElement = $(parentElement + " .resultToken");
+        var btElemment = $(parentElement + " .calbt");
+        var resultOperation = { result: parentClass._result, resultToken: parentClass._resultToken };
+        switch (value) {
             case "+":
-                resultOperation = cal.getResultOperation(0 /* add */, 1 /* isPlus */);
+                resultOperation = parentClass.getResultOperation(0 /* add */, 1 /* isPlus */);
                 break;
             case "-":
-                resultOperation = cal.getResultOperation(1 /* sub */, 2 /* isSub */);
+                resultOperation = parentClass.getResultOperation(1 /* sub */, 2 /* isSub */);
                 break;
             case "/":
-                resultOperation = cal.getResultOperation(2 /* div */, 3 /* isDiv */);
+                resultOperation = parentClass.getResultOperation(2 /* div */, 3 /* isDiv */);
                 break;
             case "*":
-                resultOperation = cal.getResultOperation(3 /* mult */, 4 /* isMul */);
+                resultOperation = parentClass.getResultOperation(3 /* mult */, 4 /* isMul */);
                 break;
             case "=":
-                resultOperation = cal.getFinalResult();
+                resultOperation = parentClass.getFinalResult();
                 break;
             case "c":
-                resultOperation = cal.clearResult();
+                resultOperation = parentClass.clearResult();
                 break;
             default:
-                resultOperation = { result: cal.getResultOutput($(this).val()), resultToken: tokenElement.text() };
+                resultOperation = { result: parentClass.getResultOutput(value), resultToken: tokenElement.text() };
                 break;
         }
         valueElement.val(function (string) { return resultOperation.result.toString(); });
         tokenElement.text(function (string) { return resultOperation.resultToken; });
-    });
-};
+    }
+});
 //# sourceMappingURL=myTypeScript.js.map

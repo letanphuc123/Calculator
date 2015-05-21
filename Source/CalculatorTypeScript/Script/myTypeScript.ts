@@ -77,38 +77,48 @@ module CalculatorModule {
 }
 
 // implement function
-window.onload = function() {
-	var cal = new CalculatorModule.Calculator("0", false, CalculatorModule.ConstantFlag.isNumber, 0, "", 0, false, "");
-	
-	$("button").click(function () {
-		var valueElement = $("." + $(this).parent().parent().attr('class') + " .resultValue");
-		var tokenElement = $("." + $(this).parent().parent().attr('class') + " .resultToken");
-		var btElemment = $("." + $(this).parent().parent().attr('class') + " .calbt");
-		var resultOperation = { result: cal._result, resultToken: cal._resultToken };
-		switch ($(this).val()) {
+$(document).ready(function () {
+	var cal_first = new CalculatorModule.Calculator("0", false, CalculatorModule.ConstantFlag.isNumber, 0, "", 0, false, "");
+	var cal_second = new CalculatorModule.Calculator("0", false, CalculatorModule.ConstantFlag.isNumber, 0, "", 0, false, "");
+
+	$("#calbody_first").find("button").click(function () {
+		showResult("#calbody_first", cal_first, $(this).val());
+	});
+
+	$("#calbody_second").find("button").click(function () {
+		showResult("#calbody_second", cal_second, $(this).val());
+	});
+
+	function showResult(parentElement: string, parentClass: any, value: string): void {
+		var valueElement = $(parentElement + " .resultValue");
+		var tokenElement = $(parentElement + " .resultToken");
+		var btElemment = $(parentElement + " .calbt");
+		var resultOperation = { result: parentClass._result, resultToken: parentClass._resultToken };
+		switch (value) {
 			case "+":
-				resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.add, CalculatorModule.ConstantFlag.isPlus);
+				resultOperation = parentClass.getResultOperation(CalculatorModule.ConstantVariable.add, CalculatorModule.ConstantFlag.isPlus);
 				break;
 			case "-":
-				resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.sub, CalculatorModule.ConstantFlag.isSub);
+				resultOperation = parentClass.getResultOperation(CalculatorModule.ConstantVariable.sub, CalculatorModule.ConstantFlag.isSub);
 				break;
 			case "/":
-				resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.div, CalculatorModule.ConstantFlag.isDiv);
+				resultOperation = parentClass.getResultOperation(CalculatorModule.ConstantVariable.div, CalculatorModule.ConstantFlag.isDiv);
 				break;
 			case "*":
-				resultOperation = cal.getResultOperation(CalculatorModule.ConstantVariable.mult, CalculatorModule.ConstantFlag.isMul);
+				resultOperation = parentClass.getResultOperation(CalculatorModule.ConstantVariable.mult, CalculatorModule.ConstantFlag.isMul);
 				break;
 			case "=":
-				resultOperation = cal.getFinalResult();
+				resultOperation = parentClass.getFinalResult();
 				break;
 			case "c":
-				resultOperation = cal.clearResult();
+				resultOperation = parentClass.clearResult();
+
 				break;
 			default:
-				resultOperation = { result: cal.getResultOutput($(this).val()), resultToken: tokenElement.text() };
+				resultOperation = { result: parentClass.getResultOutput(value), resultToken: tokenElement.text() };
 				break;
 		}
 		valueElement.val(string => resultOperation.result.toString());
 		tokenElement.text(string => resultOperation.resultToken);
-	});
-}
+	}
+})
