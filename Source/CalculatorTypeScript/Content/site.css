@@ -1,9 +1,8 @@
-﻿#calbody_first, calbody_second{
-	width: 226px;
+﻿.calbody {
+	width: 342px;
 	height: auto;
-	/*float: left;*/
-	/*margin: 100px 0px 0px 500px;*/
-
+	margin-left:-5px;
+	left: 50%;
 }
 	.caloperator {
 		width: 100%;
@@ -11,10 +10,15 @@
 	}
 
 		.caloperator .calbt{
-			width: 40px;
-			height: 30px;
-			padding: 5px;
-			margin: 2px 2px 2px 0px;
+			width: 70px;
+			height: 50px;
+			padding: 0px;
+			margin: 0 0 0 -5px;
+			border: outset 1px;
+		}
+
+		.caloperator .calbt:hover{
+			background-color: #deca9a;
 		}
 
 	.calresult {
@@ -24,15 +28,16 @@
 	}
 
 		.calresult .resultValue {
-			width: 89%;
+			width: 96%;
 			background:black;
 			color:#ff0000;
 			font-family: "Courier New", Courier;
 			padding:0 10px;
 			text-align:right;
 			font-size:18px;
-			height:auto;
+			height:50px;
 			border: none;
+			font-size:25px;
 		}
 
 		.calresult .resultToken {
@@ -41,5 +46,5 @@
 			font-family: "Courier New", Courier;
 			padding:0 10px;
 			text-align:right;
-			font-size:13px;
+			font-size:17px;
 		}
