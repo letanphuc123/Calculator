@@ -10,23 +10,19 @@ module CalculatorModule {
 		// default variables
 		public _tokenElement: string;
 		public _resultOperation: ResultOperation;
-		public _parentElement: string;
 		// constructor
-		constructor(public _outputString: string,
-			public _isNumber: boolean,
-			public _flag: number,
-			public _result: number,
-			public _resultToken: string,
-			public _outputTotal: number,
-			public _isAgain: boolean,
-			public _oldToken: string) {
+		constructor(public _parentElement: string,public _outputString: string = "0",
+			public _isNumber: boolean = false,
+			public _flag: number = ConstantOperationFlag.isNumber,
+			public _result: number = 0,
+			public _resultToken: string = "",
+			public _outputTotal: number = 0,
+			public _isAgain: boolean = false,
+			public _oldToken: string = "") {
 			this._resultOperation = new ResultOperation();
-			this._parentElement = this._outputString;
 			this._tokenElement = this._parentElement + " .resultToken";
-			this._outputString = "0";
 			$(this._parentElement + " button").click((event) => this.showResult(event));
 		}
-
 		// functions
 		// implement operator /* add */ /* subtract */ /* div */ /* multiply */
 		getResultOperation(operation: ConstantOperationType, flag: ConstantOperationFlag): ResultOperation {
@@ -155,6 +151,6 @@ module CalculatorModule {
 
 // implement function
 $(document).ready(function () {
-	var cal_first = new CalculatorModule.Calculator("#calbody_first", false, CalculatorModule.ConstantOperationFlag.isNumber, 0, "", 0, false, "");
-	var cal_second = new CalculatorModule.Calculator("#calbody_second", false, CalculatorModule.ConstantOperationFlag.isNumber, 0, "", 0, false, "");
+	var cal_first = new CalculatorModule.Calculator("#calbody_first");
+	var cal_second = new CalculatorModule.Calculator("#calbody_second");
 })

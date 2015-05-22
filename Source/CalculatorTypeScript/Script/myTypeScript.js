@@ -10,8 +10,17 @@ var CalculatorModule;
     CalculatorModule.ResultOperation = ResultOperation;
     var Calculator = (function () {
         // constructor
-        function Calculator(_outputString, _isNumber, _flag, _result, _resultToken, _outputTotal, _isAgain, _oldToken) {
+        function Calculator(_parentElement, _outputString, _isNumber, _flag, _result, _resultToken, _outputTotal, _isAgain, _oldToken) {
             var _this = this;
+            if (_outputString === void 0) { _outputString = "0"; }
+            if (_isNumber === void 0) { _isNumber = false; }
+            if (_flag === void 0) { _flag = 0 /* isNumber */; }
+            if (_result === void 0) { _result = 0; }
+            if (_resultToken === void 0) { _resultToken = ""; }
+            if (_outputTotal === void 0) { _outputTotal = 0; }
+            if (_isAgain === void 0) { _isAgain = false; }
+            if (_oldToken === void 0) { _oldToken = ""; }
+            this._parentElement = _parentElement;
             this._outputString = _outputString;
             this._isNumber = _isNumber;
             this._flag = _flag;
@@ -21,9 +30,7 @@ var CalculatorModule;
             this._isAgain = _isAgain;
             this._oldToken = _oldToken;
             this._resultOperation = new ResultOperation();
-            this._parentElement = this._outputString;
             this._tokenElement = this._parentElement + " .resultToken";
-            this._outputString = "0";
             $(this._parentElement + " button").click(function (event) { return _this.showResult(event); });
         }
         // functions
@@ -164,7 +171,7 @@ var CalculatorModule;
 })(CalculatorModule || (CalculatorModule = {}));
 // implement function
 $(document).ready(function () {
-    var cal_first = new CalculatorModule.Calculator("#calbody_first", false, 0 /* isNumber */, 0, "", 0, false, "");
-    var cal_second = new CalculatorModule.Calculator("#calbody_second", false, 0 /* isNumber */, 0, "", 0, false, "");
+    var cal_first = new CalculatorModule.Calculator("#calbody_first");
+    var cal_second = new CalculatorModule.Calculator("#calbody_second");
 });
 //# sourceMappingURL=myTypeScript.js.map
