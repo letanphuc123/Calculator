@@ -8,9 +8,9 @@ module CalculatorModule {
 	}
 	export class Calculator {
 		// default variables
-		public _valueElement: string;
 		public _tokenElement: string;
 		public _resultOperation: ResultOperation;
+		public _parentElement: string;
 		// constructor
 		constructor(public _outputString: string,
 			public _isNumber: boolean,
@@ -19,12 +19,12 @@ module CalculatorModule {
 			public _resultToken: string,
 			public _outputTotal: number,
 			public _isAgain: boolean,
-			public _oldToken: string,
-			public _parentElement: string) {
-			this._valueElement = this._parentElement + " .resultValue";
-			this._tokenElement = this._parentElement + " .resultToken";
+			public _oldToken: string) {
 			this._resultOperation = new ResultOperation();
-			$(_parentElement + " button").click((event) => this.showResult(event));
+			this._parentElement = this._outputString;
+			this._tokenElement = this._parentElement + " .resultToken";
+			this._outputString = "0";
+			$(this._parentElement + " button").click((event) => this.showResult(event));
 		}
 
 		// functions
@@ -37,7 +37,6 @@ module CalculatorModule {
 			} else {
 				this._resultToken = this._oldToken + this.getResultToken(operation);
 			}
-			
 			this._flag = flag;
 			this._isNumber = false;
 			return this.getResult(this._outputTotal, this._resultToken);
@@ -144,7 +143,7 @@ module CalculatorModule {
 					this.getResult(this.getResultOutput($(element.target).val()), $(this._tokenElement).text());
 					break;
 			}
-			$(this._valueElement).val(string => this._resultOperation._result.toString());
+			$(this._parentElement + " .resultValue").val(string => this._resultOperation._result.toString());
 			$(this._tokenElement).text(string => this._resultOperation._resultToken);
 		}
 	}
@@ -156,6 +155,6 @@ module CalculatorModule {
 
 // implement function
 $(document).ready(function () {
-	var cal_first = new CalculatorModule.Calculator("0", false, CalculatorModule.ConstantOperationFlag.isNumber, 0, "", 0, false, "", "#calbody_first");
-	var cal_second = new CalculatorModule.Calculator("0", false, CalculatorModule.ConstantOperationFlag.isNumber, 0, "", 0, false, "", "#calbody_second");
+	var cal_first = new CalculatorModule.Calculator("#calbody_first", false, CalculatorModule.ConstantOperationFlag.isNumber, 0, "", 0, false, "");
+	var cal_second = new CalculatorModule.Calculator("#calbody_second", false, CalculatorModule.ConstantOperationFlag.isNumber, 0, "", 0, false, "");
 })

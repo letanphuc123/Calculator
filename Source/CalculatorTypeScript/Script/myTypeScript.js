@@ -10,7 +10,7 @@ var CalculatorModule;
     CalculatorModule.ResultOperation = ResultOperation;
     var Calculator = (function () {
         // constructor
-        function Calculator(_outputString, _isNumber, _flag, _result, _resultToken, _outputTotal, _isAgain, _oldToken, _parentElement) {
+        function Calculator(_outputString, _isNumber, _flag, _result, _resultToken, _outputTotal, _isAgain, _oldToken) {
             var _this = this;
             this._outputString = _outputString;
             this._isNumber = _isNumber;
@@ -20,11 +20,11 @@ var CalculatorModule;
             this._outputTotal = _outputTotal;
             this._isAgain = _isAgain;
             this._oldToken = _oldToken;
-            this._parentElement = _parentElement;
-            this._valueElement = this._parentElement + " .resultValue";
-            this._tokenElement = this._parentElement + " .resultToken";
             this._resultOperation = new ResultOperation();
-            $(_parentElement + " button").click(function (event) { return _this.showResult(event); });
+            this._parentElement = this._outputString;
+            this._tokenElement = this._parentElement + " .resultToken";
+            this._outputString = "0";
+            $(this._parentElement + " button").click(function (event) { return _this.showResult(event); });
         }
         // functions
         // implement operator /* add */ /* subtract */ /* div */ /* multiply */
@@ -137,7 +137,7 @@ var CalculatorModule;
                     this.getResult(this.getResultOutput($(element.target).val()), $(this._tokenElement).text());
                     break;
             }
-            $(this._valueElement).val(function (string) { return _this._resultOperation._result.toString(); });
+            $(this._parentElement + " .resultValue").val(function (string) { return _this._resultOperation._result.toString(); });
             $(this._tokenElement).text(function (string) { return _this._resultOperation._resultToken; });
         };
         return Calculator;
@@ -164,7 +164,7 @@ var CalculatorModule;
 })(CalculatorModule || (CalculatorModule = {}));
 // implement function
 $(document).ready(function () {
-    var cal_first = new CalculatorModule.Calculator("0", false, 0 /* isNumber */, 0, "", 0, false, "", "#calbody_first");
-    var cal_second = new CalculatorModule.Calculator("0", false, 0 /* isNumber */, 0, "", 0, false, "", "#calbody_second");
+    var cal_first = new CalculatorModule.Calculator("#calbody_first", false, 0 /* isNumber */, 0, "", 0, false, "");
+    var cal_second = new CalculatorModule.Calculator("#calbody_second", false, 0 /* isNumber */, 0, "", 0, false, "");
 });
 //# sourceMappingURL=myTypeScript.js.map
