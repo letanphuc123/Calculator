@@ -2,17 +2,34 @@
 
 // define constructor /* module */ /* class */
 module CalculatorModule {
+	export class ResultOperation {
+		public _result: number;
+		public _resultToken: string;
+	}
 	export class Calculator {
+		// default variables
+		public _valueElement: string;
+		public _tokenElement: string;
+		public _resultOperation: ResultOperation;
 		// constructor
-		constructor(public _outputString: string, public _isNumber: boolean, public _flag: number, public _result: number, public _resultToken: string,
-			public _outputTotal: number, public _isAgain: boolean, public _oldToken: string, public _parentElement: string,
-			public _valueElement: string, public _tokenElement: string) {
+		constructor(public _outputString: string,
+			public _isNumber: boolean,
+			public _flag: number,
+			public _result: number,
+			public _resultToken: string,
+			public _outputTotal: number,
+			public _isAgain: boolean,
+			public _oldToken: string,
+			public _parentElement: string) {
+			this._valueElement = this._parentElement + " .resultValue";
+			this._tokenElement = this._parentElement + " .resultToken";
+			this._resultOperation = new ResultOperation();
 			$(_parentElement + " button").click((event) => this.showResult(event));
 		}
 
 		// functions
 		// implement operator /* add */ /* subtract */ /* div */ /* multiply */
-		getResultOperation(operation: number, flag: number): any {
+		getResultOperation(operation: ConstantOperationType, flag: ConstantOperationFlag): ResultOperation {
 			if (this._isNumber) {
 				this.getResultTotal();
 				this._oldToken = this._resultToken + this._result + " ";
@@ -23,8 +40,13 @@ module CalculatorModule {
 			
 			this._flag = flag;
 			this._isNumber = false;
-			var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
-			return resultOperation;
+			return this.getResult(this._outputTotal, this._resultToken);
+		}
+
+		getResult(result: number, resultToken: string): ResultOperation {
+			this._resultOperation._result = result;
+			this._resultOperation._resultToken = resultToken;
+			return this._resultOperation;
 		}
 
 		getResultToken(operation: number): string {
@@ -55,7 +77,7 @@ module CalculatorModule {
 		}
 
 		// implement clear operator /* c */
-		clearResult(): any {
+		clearResult(): ResultOperation {
 			this._flag = ConstantOperationFlag.isNumber;
 			this._isNumber = false;
 			this._isAgain = false;
@@ -64,19 +86,17 @@ module CalculatorModule {
 			this._result = 0;
 			this._oldToken = "";
 			this._resultToken = "";
-			var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
-			return resultOperation;
+			return this.getResult(this._outputTotal, this._resultToken);
 		}
 
 		// implement equal operator /* = */
-		getFinalResult(): any {
+		getFinalResult(): ResultOperation {
 			this.getResultTotal();
 			this._resultToken = "";
 			this._oldToken = "";
 			this._isAgain = true;
 			this._isNumber = false;
-			var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
-			return resultOperation;
+			return this.getResult(this._outputTotal, this._resultToken);
 		}
 
 		// get value final result currently
@@ -101,33 +121,31 @@ module CalculatorModule {
 
 		// get result operation add into element result
 		showResult(element: JQueryEventObject): void {
-			var resultOperation = { result: this._result, resultToken: this._resultToken };
 			switch ($(element.target).val()) {
 				case "+":
-					resultOperation = this.getResultOperation(ConstantOperationType.add, ConstantOperationFlag.isPlus);
+					this.getResultOperation(ConstantOperationType.add, ConstantOperationFlag.isPlus);
 					break;
 				case "-":
-					resultOperation = this.getResultOperation(ConstantOperationType.sub, ConstantOperationFlag.isSub);
+					this.getResultOperation(ConstantOperationType.sub, ConstantOperationFlag.isSub);
 					break;
 				case "/":
-					resultOperation = this.getResultOperation(ConstantOperationType.div, ConstantOperationFlag.isDiv);
+					this.getResultOperation(ConstantOperationType.div, ConstantOperationFlag.isDiv);
 					break;
 				case "*":
-					resultOperation = this.getResultOperation(ConstantOperationType.mult, ConstantOperationFlag.isMul);
+					this.getResultOperation(ConstantOperationType.mult, ConstantOperationFlag.isMul);
 					break;
 				case "=":
-					resultOperation = this.getFinalResult();
+					this.getFinalResult();
 					break;
 				case "c":
-					resultOperation = this.clearResult();
-
+					this.clearResult();
 					break;
 				default:
-					resultOperation = { result: this.getResultOutput($(element.target).val()), resultToken: $(this._tokenElement).text() };
+					this.getResult(this.getResultOutput($(element.target).val()), $(this._tokenElement).text());
 					break;
 			}
-			$(this._valueElement).val(string => resultOperation.result.toString());
-			$(this._tokenElement).text(string => resultOperation.resultToken);
+			$(this._valueElement).val(string => this._resultOperation._result.toString());
+			$(this._tokenElement).text(string => this._resultOperation._resultToken);
 		}
 	}
 
@@ -138,6 +156,6 @@ module CalculatorModule {
 
 // implement function
 $(document).ready(function () {
-	var cal_first = new CalculatorModule.Calculator("0", false, CalculatorModule.ConstantOperationFlag.isNumber, 0, "", 0, false, "", "#calbody_first", "#calbody_first .resultValue", "#calbody_first .resultToken");
-	var cal_second = new CalculatorModule.Calculator("0", false, CalculatorModule.ConstantOperationFlag.isNumber, 0, "", 0, false, "", "#calbody_second", "#calbody_second .resultValue", "#calbody_second .resultToken");
+	var cal_first = new CalculatorModule.Calculator("0", false, CalculatorModule.ConstantOperationFlag.isNumber, 0, "", 0, false, "", "#calbody_first");
+	var cal_second = new CalculatorModule.Calculator("0", false, CalculatorModule.ConstantOperationFlag.isNumber, 0, "", 0, false, "", "#calbody_second");
 })

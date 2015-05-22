@@ -2,9 +2,15 @@
 // define constructor /* module */ /* class */
 var CalculatorModule;
 (function (CalculatorModule) {
+    var ResultOperation = (function () {
+        function ResultOperation() {
+        }
+        return ResultOperation;
+    })();
+    CalculatorModule.ResultOperation = ResultOperation;
     var Calculator = (function () {
         // constructor
-        function Calculator(_outputString, _isNumber, _flag, _result, _resultToken, _outputTotal, _isAgain, _oldToken, _parentElement, _valueElement, _tokenElement) {
+        function Calculator(_outputString, _isNumber, _flag, _result, _resultToken, _outputTotal, _isAgain, _oldToken, _parentElement) {
             var _this = this;
             this._outputString = _outputString;
             this._isNumber = _isNumber;
@@ -15,8 +21,9 @@ var CalculatorModule;
             this._isAgain = _isAgain;
             this._oldToken = _oldToken;
             this._parentElement = _parentElement;
-            this._valueElement = _valueElement;
-            this._tokenElement = _tokenElement;
+            this._valueElement = this._parentElement + " .resultValue";
+            this._tokenElement = this._parentElement + " .resultToken";
+            this._resultOperation = new ResultOperation();
             $(_parentElement + " button").click(function (event) { return _this.showResult(event); });
         }
         // functions
@@ -32,8 +39,12 @@ var CalculatorModule;
             }
             this._flag = flag;
             this._isNumber = false;
-            var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
-            return resultOperation;
+            return this.getResult(this._outputTotal, this._resultToken);
+        };
+        Calculator.prototype.getResult = function (result, resultToken) {
+            this._resultOperation._result = result;
+            this._resultOperation._resultToken = resultToken;
+            return this._resultOperation;
         };
         Calculator.prototype.getResultToken = function (operation) {
             var resultOperationType = "";
@@ -70,8 +81,7 @@ var CalculatorModule;
             this._result = 0;
             this._oldToken = "";
             this._resultToken = "";
-            var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
-            return resultOperation;
+            return this.getResult(this._outputTotal, this._resultToken);
         };
         // implement equal operator /* = */
         Calculator.prototype.getFinalResult = function () {
@@ -80,8 +90,7 @@ var CalculatorModule;
             this._oldToken = "";
             this._isAgain = true;
             this._isNumber = false;
-            var resultOperation = { result: this._outputTotal, resultToken: this._resultToken };
-            return resultOperation;
+            return this.getResult(this._outputTotal, this._resultToken);
         };
         // get value final result currently
         Calculator.prototype.getResultTotal = function () {
@@ -104,32 +113,32 @@ var CalculatorModule;
         };
         // get result operation add into element result
         Calculator.prototype.showResult = function (element) {
-            var resultOperation = { result: this._result, resultToken: this._resultToken };
+            var _this = this;
             switch ($(element.target).val()) {
                 case "+":
-                    resultOperation = this.getResultOperation(0 /* add */, 1 /* isPlus */);
+                    this.getResultOperation(0 /* add */, 1 /* isPlus */);
                     break;
                 case "-":
-                    resultOperation = this.getResultOperation(1 /* sub */, 2 /* isSub */);
+                    this.getResultOperation(1 /* sub */, 2 /* isSub */);
                     break;
                 case "/":
-                    resultOperation = this.getResultOperation(2 /* div */, 3 /* isDiv */);
+                    this.getResultOperation(2 /* div */, 3 /* isDiv */);
                     break;
                 case "*":
-                    resultOperation = this.getResultOperation(3 /* mult */, 4 /* isMul */);
+                    this.getResultOperation(3 /* mult */, 4 /* isMul */);
                     break;
                 case "=":
-                    resultOperation = this.getFinalResult();
+                    this.getFinalResult();
                     break;
                 case "c":
-                    resultOperation = this.clearResult();
+                    this.clearResult();
                     break;
                 default:
-                    resultOperation = { result: this.getResultOutput($(element.target).val()), resultToken: $(this._tokenElement).text() };
+                    this.getResult(this.getResultOutput($(element.target).val()), $(this._tokenElement).text());
                     break;
             }
-            $(this._valueElement).val(function (string) { return resultOperation.result.toString(); });
-            $(this._tokenElement).text(function (string) { return resultOperation.resultToken; });
+            $(this._valueElement).val(function (string) { return _this._resultOperation._result.toString(); });
+            $(this._tokenElement).text(function (string) { return _this._resultOperation._resultToken; });
         };
         return Calculator;
     })();
@@ -155,7 +164,7 @@ var CalculatorModule;
 })(CalculatorModule || (CalculatorModule = {}));
 // implement function
 $(document).ready(function () {
-    var cal_first = new CalculatorModule.Calculator("0", false, 0 /* isNumber */, 0, "", 0, false, "", "#calbody_first", "#calbody_first .resultValue", "#calbody_first .resultToken");
-    var cal_second = new CalculatorModule.Calculator("0", false, 0 /* isNumber */, 0, "", 0, false, "", "#calbody_second", "#calbody_second .resultValue", "#calbody_second .resultToken");
+    var cal_first = new CalculatorModule.Calculator("0", false, 0 /* isNumber */, 0, "", 0, false, "", "#calbody_first");
+    var cal_second = new CalculatorModule.Calculator("0", false, 0 /* isNumber */, 0, "", 0, false, "", "#calbody_second");
 });
 //# sourceMappingURL=myTypeScript.js.map
