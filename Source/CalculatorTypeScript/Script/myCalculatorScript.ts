@@ -2,16 +2,29 @@
 
 // define constructor /* module */ /* class */
 module CalculatorModule {
+	// enum
+	export var ConstantOperationType = {
+		add : "+",
+		sub : "-",
+		div : "/",
+		mult : "*",
+	}
+
+	export enum ConstantOperationFlag { isNumber, isPlus, isSub, isDiv, isMul };
+
 	export class ResultOperation {
 		public _result: number;
 		public _resultToken: string;
 	}
+
 	export class Calculator {
 		// default variables
 		public _tokenElement: string;
 		public _resultOperation: ResultOperation;
+
 		// constructor
-		constructor(public _parentElement: string,public _outputString: string = "0",
+		constructor(public _parentElement: string,
+			public _outputString: string = "0",
 			public _isNumber: boolean = false,
 			public _flag: number = ConstantOperationFlag.isNumber,
 			public _result: number = 0,
@@ -23,15 +36,16 @@ module CalculatorModule {
 			this._tokenElement = this._parentElement + " .resultToken";
 			$(this._parentElement + " button").click((event) => this.showResult(event));
 		}
+
 		// functions
 		// implement operator /* add */ /* subtract */ /* div */ /* multiply */
-		getResultOperation(operation: ConstantOperationType, flag: ConstantOperationFlag): ResultOperation {
+		getResultOperation(operation: string, flag: ConstantOperationFlag): ResultOperation {
 			if (this._isNumber) {
 				this.getResultTotal();
 				this._oldToken = this._resultToken + this._result + " ";
-				this._resultToken += this._result + " " + this.getResultToken(operation);
+				this._resultToken += this._result + " " + operation + "  ";
 			} else {
-				this._resultToken = this._oldToken + this.getResultToken(operation);
+				this._resultToken = this._oldToken + operation + "  ";
 			}
 			this._flag = flag;
 			this._isNumber = false;
@@ -42,25 +56,6 @@ module CalculatorModule {
 			this._resultOperation._result = result;
 			this._resultOperation._resultToken = resultToken;
 			return this._resultOperation;
-		}
-
-		getResultToken(operation: number): string {
-			var resultOperationType = "";
-			switch (operation) {
-				case ConstantOperationType.add:
-					resultOperationType = "+  ";
-					break;
-				case ConstantOperationType.sub:
-					resultOperationType = "-  ";
-					break;
-				case ConstantOperationType.div:
-					resultOperationType = "/  ";
-					break;
-				case ConstantOperationType.mult:
-					resultOperationType = "*  ";
-					break;
-			}
-			return resultOperationType;
 		}
 
 		// implement number button /* 0 -> 9 */
@@ -143,10 +138,6 @@ module CalculatorModule {
 			$(this._tokenElement).text(string => this._resultOperation._resultToken);
 		}
 	}
-
-	// enum
-	export enum ConstantOperationType { add, sub, div, mult };
-	export enum ConstantOperationFlag { isNumber, isPlus, isSub, isDiv, isMul };
 }
 
 // implement function

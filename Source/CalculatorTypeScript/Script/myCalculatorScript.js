@@ -2,6 +2,22 @@
 // define constructor /* module */ /* class */
 var CalculatorModule;
 (function (CalculatorModule) {
+    // enum
+    CalculatorModule.ConstantOperationType = {
+        add: "+",
+        sub: "-",
+        div: "/",
+        mult: "*",
+    };
+    (function (ConstantOperationFlag) {
+        ConstantOperationFlag[ConstantOperationFlag["isNumber"] = 0] = "isNumber";
+        ConstantOperationFlag[ConstantOperationFlag["isPlus"] = 1] = "isPlus";
+        ConstantOperationFlag[ConstantOperationFlag["isSub"] = 2] = "isSub";
+        ConstantOperationFlag[ConstantOperationFlag["isDiv"] = 3] = "isDiv";
+        ConstantOperationFlag[ConstantOperationFlag["isMul"] = 4] = "isMul";
+    })(CalculatorModule.ConstantOperationFlag || (CalculatorModule.ConstantOperationFlag = {}));
+    var ConstantOperationFlag = CalculatorModule.ConstantOperationFlag;
+    ;
     var ResultOperation = (function () {
         function ResultOperation() {
         }
@@ -39,10 +55,10 @@ var CalculatorModule;
             if (this._isNumber) {
                 this.getResultTotal();
                 this._oldToken = this._resultToken + this._result + " ";
-                this._resultToken += this._result + " " + this.getResultToken(operation);
+                this._resultToken += this._result + " " + operation + "  ";
             }
             else {
-                this._resultToken = this._oldToken + this.getResultToken(operation);
+                this._resultToken = this._oldToken + operation + "  ";
             }
             this._flag = flag;
             this._isNumber = false;
@@ -52,24 +68,6 @@ var CalculatorModule;
             this._resultOperation._result = result;
             this._resultOperation._resultToken = resultToken;
             return this._resultOperation;
-        };
-        Calculator.prototype.getResultToken = function (operation) {
-            var resultOperationType = "";
-            switch (operation) {
-                case 0 /* add */:
-                    resultOperationType = "+  ";
-                    break;
-                case 1 /* sub */:
-                    resultOperationType = "-  ";
-                    break;
-                case 2 /* div */:
-                    resultOperationType = "/  ";
-                    break;
-                case 3 /* mult */:
-                    resultOperationType = "*  ";
-                    break;
-            }
-            return resultOperationType;
         };
         // implement number button /* 0 -> 9 */
         Calculator.prototype.getResultOutput = function (btn) {
@@ -123,16 +121,16 @@ var CalculatorModule;
             var _this = this;
             switch ($(element.target).val()) {
                 case "+":
-                    this.getResultOperation(0 /* add */, 1 /* isPlus */);
+                    this.getResultOperation(CalculatorModule.ConstantOperationType.add, 1 /* isPlus */);
                     break;
                 case "-":
-                    this.getResultOperation(1 /* sub */, 2 /* isSub */);
+                    this.getResultOperation(CalculatorModule.ConstantOperationType.sub, 2 /* isSub */);
                     break;
                 case "/":
-                    this.getResultOperation(2 /* div */, 3 /* isDiv */);
+                    this.getResultOperation(CalculatorModule.ConstantOperationType.div, 3 /* isDiv */);
                     break;
                 case "*":
-                    this.getResultOperation(3 /* mult */, 4 /* isMul */);
+                    this.getResultOperation(CalculatorModule.ConstantOperationType.mult, 4 /* isMul */);
                     break;
                 case "=":
                     this.getFinalResult();
@@ -150,28 +148,10 @@ var CalculatorModule;
         return Calculator;
     })();
     CalculatorModule.Calculator = Calculator;
-    // enum
-    (function (ConstantOperationType) {
-        ConstantOperationType[ConstantOperationType["add"] = 0] = "add";
-        ConstantOperationType[ConstantOperationType["sub"] = 1] = "sub";
-        ConstantOperationType[ConstantOperationType["div"] = 2] = "div";
-        ConstantOperationType[ConstantOperationType["mult"] = 3] = "mult";
-    })(CalculatorModule.ConstantOperationType || (CalculatorModule.ConstantOperationType = {}));
-    var ConstantOperationType = CalculatorModule.ConstantOperationType;
-    ;
-    (function (ConstantOperationFlag) {
-        ConstantOperationFlag[ConstantOperationFlag["isNumber"] = 0] = "isNumber";
-        ConstantOperationFlag[ConstantOperationFlag["isPlus"] = 1] = "isPlus";
-        ConstantOperationFlag[ConstantOperationFlag["isSub"] = 2] = "isSub";
-        ConstantOperationFlag[ConstantOperationFlag["isDiv"] = 3] = "isDiv";
-        ConstantOperationFlag[ConstantOperationFlag["isMul"] = 4] = "isMul";
-    })(CalculatorModule.ConstantOperationFlag || (CalculatorModule.ConstantOperationFlag = {}));
-    var ConstantOperationFlag = CalculatorModule.ConstantOperationFlag;
-    ;
 })(CalculatorModule || (CalculatorModule = {}));
 // implement function
 $(document).ready(function () {
     var cal_first = new CalculatorModule.Calculator("#calbody_first");
     var cal_second = new CalculatorModule.Calculator("#calbody_second");
 });
-//# sourceMappingURL=myTypeScript.js.map
+//# sourceMappingURL=myCalculatorScript.js.map
